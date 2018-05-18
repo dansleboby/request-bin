@@ -8,6 +8,9 @@ import io.graversen.fiber.server.websocket.base.AbstractWebSocketServer;
 import io.graversen.requestbin.websocket.LoggingNetworkEventListener;
 import io.graversen.requestbin.websocket.WebSocketClientManager;
 import io.graversen.requestbin.websocket.WebSocketServerConfig;
+import io.graversen.trunk.io.IOUtils;
+import io.graversen.trunk.io.serialization.GsonSerializer;
+import io.graversen.trunk.io.serialization.interfaces.ISerializer;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
@@ -32,13 +35,14 @@ public class ConfigBean implements WebServerFactoryCustomizer<ConfigurableServle
     public AbstractEventBus eventBus()
     {
         final DefaultEventBus defaultEventBus = new DefaultEventBus();
-        loggingNetworkEventListener(defaultEventBus);
+        new LoggingNetworkEventListener(defaultEventBus);
 
         return defaultEventBus;
     }
 
-    public LoggingNetworkEventListener loggingNetworkEventListener(AbstractEventBus eventBus)
+    @Bean
+    public ISerializer serializer()
     {
-        return new LoggingNetworkEventListener(eventBus);
+        return new GsonSerializer();
     }
 }
