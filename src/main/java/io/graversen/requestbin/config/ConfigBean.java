@@ -52,5 +52,4 @@ public class ConfigBean implements WebServerFactoryCustomizer<ConfigurableServle
     {
         return new ThreadPoolTaskExecutor();
     }
-
 }

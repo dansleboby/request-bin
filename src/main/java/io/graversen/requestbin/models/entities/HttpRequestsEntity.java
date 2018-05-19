@@ -18,13 +18,13 @@ public class HttpRequestsEntity
     @Column(name = "request_body")
     private String requestBody;
 
-    @Column(name = "request_body")
+    @Column(name = "query_parameters")
     private String queryParameters;
 
-    @Column(name = "request_body")
+    @Column(name = "http_headers")
     private String httpHeaders;
 
-    @Column(name = "request_body")
+    @Column(name = "ip")
     private String ipAddress;
 
     public HttpRequestsEntity()
