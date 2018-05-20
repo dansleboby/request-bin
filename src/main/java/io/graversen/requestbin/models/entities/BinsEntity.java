@@ -18,7 +18,7 @@ public class BinsEntity
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "discarded_at", nullable = false)
+    @Column(name = "discarded_at")
     private LocalDateTime discardedAt;
 
     public BinsEntity()

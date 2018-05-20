@@ -2,10 +2,10 @@ package io.graversen.requestbin.models.dto;
 
 public class SubscribeDTO
 {
-    private String identifier;
+    private String binIdentifier;
 
-    public String getIdentifier()
+    public String getBinIdentifier()
     {
-        return identifier;
+        return binIdentifier;
     }
 }

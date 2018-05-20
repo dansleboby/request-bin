@@ -30,7 +30,7 @@ public class BinController
         this.ipAddressUtils = ipAddressUtils;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+//    @RequestMapping(method = RequestMethod.GET)
     public String newBin(HttpServletRequest httpServletRequest, Model model)
     {
         final Map<String, String> httpHeaders = Collections.list(httpServletRequest.getHeaderNames())
