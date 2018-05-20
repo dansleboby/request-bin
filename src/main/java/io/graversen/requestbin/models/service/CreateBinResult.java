@@ -13,4 +13,14 @@ public class CreateBinResult
         this.bin = bin;
         this.createBinStatus = createBinStatus;
     }
+
+    public Bin getBin()
+    {
+        return bin;
+    }
+
+    public CreateBinStatus getCreateBinStatus()
+    {
+        return createBinStatus;
+    }
 }

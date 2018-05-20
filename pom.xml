@@ -51,7 +51,7 @@
         <dependency>
             <groupId>com.github.MrGraversen</groupId>
             <artifactId>Trunk</artifactId>
-            <version>0.0.5</version>
+            <version>0.0.6a</version>
         </dependency>
         <dependency>
             <groupId>com.github.MrGraversen</groupId>
