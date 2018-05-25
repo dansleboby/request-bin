@@ -2,6 +2,7 @@ package io.graversen.requestbin.models.entities;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @Entity
 @Table(name = "bins")
@@ -20,6 +21,9 @@ public class BinsEntity
 
     @Column(name = "discarded_at")
     private LocalDateTime discardedAt;
+
+    @OneToMany(mappedBy = "bin")
+    private Collection<HttpRequestsEntity> httpRequests;
 
     public BinsEntity()
     {
@@ -55,5 +59,15 @@ public class BinsEntity
     public void setDiscardedAt(LocalDateTime discardedAt)
     {
         this.discardedAt = discardedAt;
+    }
+
+    public Collection<HttpRequestsEntity> getHttpRequests()
+    {
+        return httpRequests;
+    }
+
+    public void setHttpRequests(Collection<HttpRequestsEntity> httpRequests)
+    {
+        this.httpRequests = httpRequests;
     }
 }

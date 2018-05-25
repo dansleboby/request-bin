@@ -27,6 +27,9 @@ public class HttpRequestsEntity
     @Column(name = "ip")
     private String ipAddress;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private BinsEntity bin;
+
     public HttpRequestsEntity()
     {
     }
@@ -84,5 +87,15 @@ public class HttpRequestsEntity
     public void setIpAddress(String ipAddress)
     {
         this.ipAddress = ipAddress;
+    }
+
+    public BinsEntity getBin()
+    {
+        return bin;
+    }
+
+    public void setBin(BinsEntity bin)
+    {
+        this.bin = bin;
     }
 }
