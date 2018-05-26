@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 public class BinService implements IBinService
@@ -30,5 +32,12 @@ public class BinService implements IBinService
         final BinsEntity binEntity = binRepository.save(new BinsEntity(identifier));
 
         return new CreateBinResult(new Bin(binEntity.getId(), binEntity.getIdentifier(), binEntity.getCreatedAt(), binEntity.getDiscardedAt()), CreateBinStatus.SUCCESS);
+    }
+
+    @Override
+    public Optional<Bin> getBin(String binIdentifier)
+    {
+        final Optional<BinsEntity> binsEntityOptional = binRepository.findByIdentifier(binIdentifier);
+        return binsEntityOptional.map(b -> new Bin(b.getId(), b.getIdentifier(), b.getCreatedAt(), b.getDiscardedAt()));
     }
 }

@@ -6,8 +6,8 @@ import io.graversen.fiber.event.listeners.AbstractNetworkEventListener;
 import io.graversen.fiber.server.management.AbstractNetworkClientManager;
 import io.graversen.fiber.server.management.INetworkClient;
 import io.graversen.fiber.server.websocket.base.AbstractWebSocketServer;
-import io.graversen.requestbin.models.dto.HttpRequestDTO;
 import io.graversen.requestbin.models.dto.SubscribeDTO;
+import io.graversen.requestbin.models.service.HttpRequest;
 import io.graversen.trunk.io.serialization.interfaces.ISerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -54,7 +54,7 @@ public class RequestBinClients extends AbstractNetworkEventListener
         return binToNetworkClientMap.getOrDefault(binIdentifier, new ArrayList<>());
     }
 
-    public void emitHttpRequestToClients(String binIdentifier, HttpRequestDTO httpRequest)
+    public void emitHttpRequestToClients(String binIdentifier, HttpRequest httpRequest)
     {
         final String json = serializer.serialize(httpRequest);
         getClients(binIdentifier).forEach(networkClient -> webSocketServer.send(networkClient, json.getBytes()));
@@ -83,14 +83,14 @@ public class RequestBinClients extends AbstractNetworkEventListener
             associate(subscribeDTO.getBinIdentifier(), networkMessageReceivedEvent.getNetworkClient());
             networkClientManager.putData(networkClient.id(), BIN_ID_KEY, subscribeDTO.getBinIdentifier());
 
-            var httpRequest = new HttpRequestDTO();
-            httpRequest.setCreatedAt(LocalDateTime.now());
-            httpRequest.setIpAddress("1.2.3.4");
-            httpRequest.setHttpHeaders(new HashMap<>());
-            httpRequest.setQueryParameters(new HashMap<>());
-            httpRequest.setRequestBody(Base64.getEncoder().encodeToString(serializer.serialize(subscribeDTO).getBytes()));
-
-            emitHttpRequestToClients(subscribeDTO.getBinIdentifier(), httpRequest);
+//            var httpRequest = new HttpRequestDTO();
+//            httpRequest.setCreatedAt(LocalDateTime.now());
+//            httpRequest.setIpAddress("1.2.3.4");
+//            httpRequest.setHttpHeaders(new HashMap<>());
+//            httpRequest.setQueryParameters(new HashMap<>());
+//            httpRequest.setRequestBody(Base64.getEncoder().encodeToString(serializer.serialize(subscribeDTO).getBytes()));
+//
+//            emitHttpRequestToClients(subscribeDTO.getBinIdentifier(), httpRequest);
         }
         catch (Exception e)
         {

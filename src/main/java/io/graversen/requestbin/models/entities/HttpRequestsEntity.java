@@ -27,7 +27,14 @@ public class HttpRequestsEntity
     @Column(name = "ip")
     private String ipAddress;
 
+    @Column(name = "http_verb")
+    private String httpVerb;
+
+    @Column(name = "bin_id")
+    private Long binId;
+
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bin_id", insertable = false, updatable = false)
     private BinsEntity bin;
 
     public HttpRequestsEntity()
@@ -87,6 +94,26 @@ public class HttpRequestsEntity
     public void setIpAddress(String ipAddress)
     {
         this.ipAddress = ipAddress;
+    }
+
+    public String getHttpVerb()
+    {
+        return httpVerb;
+    }
+
+    public void setHttpVerb(String httpVerb)
+    {
+        this.httpVerb = httpVerb;
+    }
+
+    public Long getBinId()
+    {
+        return binId;
+    }
+
+    public void setBinId(Long binId)
+    {
+        this.binId = binId;
     }
 
     public BinsEntity getBin()
