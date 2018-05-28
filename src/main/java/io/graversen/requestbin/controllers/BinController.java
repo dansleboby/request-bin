@@ -39,8 +39,8 @@ public class BinController
         this.base64Encoder = Base64.getEncoder();
     }
 
-    //    @RequestMapping(method = RequestMethod.GET)
-    public String newBin(HttpServletRequest httpServletRequest, Model model)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ModelAndView newBin(HttpServletRequest httpServletRequest, Model model)
     {
         final String clientIp = SpringUtil.getIpAddress(httpServletRequest);
         final String userAgent = httpServletRequest.getHeader(HttpHeaders.USER_AGENT);
@@ -50,14 +50,12 @@ public class BinController
 
         if (newBin.getCreateBinStatus().equals(CreateBinStatus.SUCCESS))
         {
-            return newBin.getBin().getIdentifier();
+            return new ModelAndView(String.format("redirect:/%s/inspect", newBin.getBin().getIdentifier()));
         }
         else
         {
-            // Return forbidden or something
+            return new ModelAndView("", HttpStatus.FORBIDDEN);
         }
-
-        return "";
     }
 
     @RequestMapping(value = "{binIdentifier}", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH, RequestMethod.DELETE, RequestMethod.HEAD, RequestMethod.OPTIONS})
