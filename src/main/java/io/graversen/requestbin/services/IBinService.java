@@ -10,5 +10,7 @@ public interface IBinService
 {
     CreateBinResult createNewBin(CreateBin createBin);
 
+    CreateBinResult createNewBin(String binIdentifier);
+
     Optional<Bin> getBin(String binIdentifier);
 }

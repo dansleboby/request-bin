@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.3/jquery.timeago.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/ws.js"></script>
+    <script src="/js/controls.js"></script>
+</head>
+<body>
+
+<section class="section">
+    <div class="container">
+
+        <h1 class="subtitle is-2">
+            Bin Inspection
+        </h1>
+
+        <p class="buttons">
+            <a id="play-pause-btn" class="button is-outlined">
+                <span class="icon">
+                    <i id="play-pause-icon" class="fas fa-pause"></i>
+                </span>
+            </a>
+            <a id="next-btn" class="button is-outlined" style="display: none;">
+                <span class="icon">
+                    <i class="fas fa-sticky-note"></i>
+                </span>
+                <span id="request-queue-count">
+                    0
+                </span>
+            </a>
+        </p>
+
+        <hr>
+
+        <div class="container">
+            <div class="notification">
+
+                <div class="message is-primary">
+                    <p class="message-header">Request shiz</p>
+                    <p class="message-body">
+
+                    </p>
+                </div>
+
+                <table class="table is-bordered is-fullwidth">
+                    <thead>
+                    <th>HTTP Headers</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><strong>Test1:</strong> Value1</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Test2:</strong> Value2</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table class="table striped is-bordered is-fullwidth">
+                    <thead>
+                    <th>Query Parameters</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><strong>Test1:</strong> Value1</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Test2:</strong> Value2</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h6 class="subtitle is-6">Request Body</h6>
+<pre>{
+    "test": "hest"
+}</pre>
+            </div>
+        </div>
+
+        <!--<nav class="level is-mobile">-->
+            <!--<div class="level-item has-text-centered">-->
+                <!--<div>-->
+                    <!--<p class="heading">Latest Request</p>-->
+                    <!--<p class="title">12:00:00</p>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="level-item has-text-centered">-->
+                <!--<div>-->
+                    <!--<p class="heading">Request Count (Session)</p>-->
+                    <!--<p class="title">123</p>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="level-item has-text-centered">-->
+                <!--<div>-->
+                    <!--<p class="heading">Request Count (Total)</p>-->
+                    <!--<p class="title">2468</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</nav>-->
+
+    </div>
+</section>
+
+<script type="text/javascript">
+    var binIdentifier = "[[${model.binIdentifier}]]";
+</script>
+
+</body>
+</html>

@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 import java.util.Base64;
 
 @Service
-@Transactional
 public class HttpRequestService implements IHttpRequestService
 {
     private final RequestBinClients requestBinClients;
@@ -32,11 +31,12 @@ public class HttpRequestService implements IHttpRequestService
     }
 
     @Override
+    @Transactional
     public void create(CreateHttpRequest createHttpRequest)
     {
         HttpRequestsEntity httpRequestsEntity = new HttpRequestsEntity();
         httpRequestsEntity.setBinId(createHttpRequest.getBinId());
-        httpRequestsEntity.setCreatedAt(LocalDateTime.now());
+        httpRequestsEntity.setCreatedAt(createHttpRequest.getCreatedAt());
         httpRequestsEntity.setHttpHeaders(base64Encoder.encodeToString(serializer.serialize(createHttpRequest.getHttpHeaders()).getBytes()));
         httpRequestsEntity.setQueryParameters(base64Encoder.encodeToString(serializer.serialize(createHttpRequest.getQueryParameters()).getBytes()));
         httpRequestsEntity.setIpAddress(createHttpRequest.getIpAddress());

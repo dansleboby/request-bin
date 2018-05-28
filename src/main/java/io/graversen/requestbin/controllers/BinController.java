@@ -12,8 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Map;
@@ -58,37 +60,40 @@ public class BinController
     @RequestMapping(value = "{binIdentifier}", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH, RequestMethod.DELETE, RequestMethod.HEAD, RequestMethod.OPTIONS})
     public ResponseEntity<Void> httpBin(@PathVariable String binIdentifier, @RequestBody(required = false) String requestBody, @RequestParam(required = false) Map<String, String> requestParams, HttpServletRequest httpServletRequest)
     {
-        final Optional<Bin> binOptional = binService.getBin(binIdentifier);
-
-        if (binOptional.isPresent())
-        {
-            final Bin bin = binOptional.get();
-
-            if (bin.getDiscardedAt() != null)
-            {
-                return ResponseEntity.status(HttpStatus.GONE).build();
-            }
-        }
-        else
-        {
-            return ResponseEntity.notFound().build();
-        }
+//        final Optional<Bin> binOptional = binService.getBin(binIdentifier);
+//
+//        if (binOptional.isPresent())
+//        {
+//            final Bin bin = binOptional.get();
+//
+//            if (bin.getDiscardedAt() != null)
+//            {
+//                return ResponseEntity.status(HttpStatus.GONE).build();
+//            }
+//        }
+//        else
+//        {
+//            return ResponseEntity.notFound().build();
+//        }
 
         final Map<String, String> httpHeaders = SpringUtil.extractHeaders(httpServletRequest);
         final String clientIp = SpringUtil.getIpAddress(httpServletRequest);
         final String httpVerb = httpServletRequest.getMethod();
+        final LocalDateTime now = LocalDateTime.now();
 
-        final HttpRequest httpRequest = new HttpRequest(base64Encoder.encodeToString(requestBody.getBytes()), requestParams, httpHeaders, clientIp, httpVerb);
+        final HttpRequest httpRequest = new HttpRequest(base64Encoder.encodeToString(requestBody.getBytes()), requestParams, httpHeaders, clientIp, httpVerb, now);
+
         httpRequestService.emitHttpRequest(binIdentifier, Collections.singleton(httpRequest));
 
-        final CreateHttpRequest createHttpRequest = new CreateHttpRequest(requestBody, requestParams, httpHeaders, clientIp, httpVerb, binOptional.get().getId());
+//        final CreateHttpRequest createHttpRequest = new CreateHttpRequest(requestBody, requestParams, httpHeaders, clientIp, httpVerb, binOptional.get().getId(), now);
 
         return ResponseEntity.ok().build();
     }
 
     @RequestMapping(value = "{binIdentifier}/inspect", method = RequestMethod.GET)
-    public String httpBinInspect(@PathVariable String binIdentifier, Model model)
+    public ModelAndView httpBinInspect(@PathVariable String binIdentifier, Model model)
     {
-        return "";
+        model.addAttribute("binIdentifier", binIdentifier);
+        return new ModelAndView("inspect", "model", model);
     }
 }

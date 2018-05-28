@@ -1,5 +1,6 @@
 package io.graversen.requestbin.models.service;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public class CreateHttpRequest
@@ -10,8 +11,9 @@ public class CreateHttpRequest
     private String ipAddress;
     private String httpVerb;
     private Long binId;
+    private LocalDateTime createdAt;
 
-    public CreateHttpRequest(String requestBody, Map<String, String> queryParameters, Map<String, String> httpHeaders, String ipAddress, String httpVerb, Long binId)
+    public CreateHttpRequest(String requestBody, Map<String, String> queryParameters, Map<String, String> httpHeaders, String ipAddress, String httpVerb, Long binId, LocalDateTime createdAt)
     {
         this.requestBody = requestBody;
         this.queryParameters = queryParameters;
@@ -19,6 +21,7 @@ public class CreateHttpRequest
         this.ipAddress = ipAddress;
         this.httpVerb = httpVerb;
         this.binId = binId;
+        this.createdAt = createdAt;
     }
 
     public String getRequestBody()
@@ -49,5 +52,10 @@ public class CreateHttpRequest
     public String getHttpVerb()
     {
         return httpVerb;
+    }
+
+    public LocalDateTime getCreatedAt()
+    {
+        return createdAt;
     }
 }

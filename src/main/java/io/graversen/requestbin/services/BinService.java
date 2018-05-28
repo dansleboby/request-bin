@@ -35,6 +35,14 @@ public class BinService implements IBinService
     }
 
     @Override
+    public CreateBinResult createNewBin(String binIdentifier)
+    {
+        final BinsEntity binEntity = binRepository.save(new BinsEntity(binIdentifier));
+
+        return new CreateBinResult(new Bin(binEntity.getId(), binEntity.getIdentifier(), binEntity.getCreatedAt(), binEntity.getDiscardedAt()), CreateBinStatus.SUCCESS);
+    }
+
+    @Override
     public Optional<Bin> getBin(String binIdentifier)
     {
         final Optional<BinsEntity> binsEntityOptional = binRepository.findByIdentifier(binIdentifier);

@@ -3,12 +3,12 @@ $( document ).ready(function() {
     var ws = new WebSocket(wsAddress);
     console.log(ws);
 
-    ws.onopen = function (data) {
-        var subscribe = { binIdentifier: binId }
+    ws.onopen = function (openEvent) {
+        var subscribe = { binIdentifier: binIdentifier }
         ws.send(JSON.stringify(subscribe));
     };
 
-    ws.onmessage = function (data) {
-        console.log(data);
+    ws.onmessage = function (messageEvent) {
+        showOrQueue(messageEvent.data);
     };
 });
