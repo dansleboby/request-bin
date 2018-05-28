@@ -1,13 +1,14 @@
 package io.graversen.requestbin.controllers;
 
 import io.graversen.requestbin.models.etc.CreateBinStatus;
-import io.graversen.requestbin.models.service.*;
+import io.graversen.requestbin.models.service.CreateBin;
+import io.graversen.requestbin.models.service.CreateBinResult;
+import io.graversen.requestbin.models.service.HttpRequest;
 import io.graversen.requestbin.services.IBinService;
 import io.graversen.requestbin.services.IHttpRequestService;
 import io.graversen.requestbin.util.SpringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,6 @@ import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
 
 @Controller
 public class BinController

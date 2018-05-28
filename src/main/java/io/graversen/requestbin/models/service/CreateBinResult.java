@@ -1,7 +1,6 @@
 package io.graversen.requestbin.models.service;
 
 import io.graversen.requestbin.models.etc.CreateBinStatus;
-import io.graversen.requestbin.models.service.Bin;
 
 public class CreateBinResult
 {
