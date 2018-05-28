@@ -12,8 +12,9 @@ public class CreateHttpRequest
     private String httpVerb;
     private Long binId;
     private LocalDateTime createdAt;
+    private long requestDuration;
 
-    public CreateHttpRequest(String requestBody, Map<String, String> queryParameters, Map<String, String> httpHeaders, String ipAddress, String httpVerb, Long binId, LocalDateTime createdAt)
+    public CreateHttpRequest(String requestBody, Map<String, String> queryParameters, Map<String, String> httpHeaders, String ipAddress, String httpVerb, Long binId, LocalDateTime createdAt, long requestDuration)
     {
         this.requestBody = requestBody;
         this.queryParameters = queryParameters;
@@ -22,6 +23,7 @@ public class CreateHttpRequest
         this.httpVerb = httpVerb;
         this.binId = binId;
         this.createdAt = createdAt;
+        this.requestDuration = requestDuration;
     }
 
     public String getRequestBody()
@@ -57,5 +59,10 @@ public class CreateHttpRequest
     public LocalDateTime getCreatedAt()
     {
         return createdAt;
+    }
+
+    public long getRequestDuration()
+    {
+        return requestDuration;
     }
 }

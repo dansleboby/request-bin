@@ -33,6 +33,9 @@ public class HttpRequestsEntity
     @Column(name = "bin_id")
     private Long binId;
 
+    @Column(name = "request_duration")
+    private Long requestDuration;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bin_id", insertable = false, updatable = false)
     private BinsEntity bin;
@@ -124,5 +127,15 @@ public class HttpRequestsEntity
     public void setBin(BinsEntity bin)
     {
         this.bin = bin;
+    }
+
+    public Long getRequestDuration()
+    {
+        return requestDuration;
+    }
+
+    public void setRequestDuration(Long requestDuration)
+    {
+        this.requestDuration = requestDuration;
     }
 }

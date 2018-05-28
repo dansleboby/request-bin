@@ -1,6 +1,7 @@
 package io.graversen.requestbin.controllers;
 
 import io.graversen.requestbin.models.etc.CreateBinStatus;
+import io.graversen.requestbin.models.service.Bin;
 import io.graversen.requestbin.models.service.CreateBin;
 import io.graversen.requestbin.models.service.CreateBinResult;
 import io.graversen.requestbin.models.service.HttpRequest;
@@ -9,6 +10,7 @@ import io.graversen.requestbin.services.IHttpRequestService;
 import io.graversen.requestbin.util.SpringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class BinController
@@ -60,28 +63,30 @@ public class BinController
     @RequestMapping(value = "{binIdentifier}", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH, RequestMethod.DELETE, RequestMethod.HEAD, RequestMethod.OPTIONS})
     public ResponseEntity<Void> httpBin(@PathVariable String binIdentifier, @RequestBody(required = false) String requestBody, @RequestParam(required = false) Map<String, String> requestParams, HttpServletRequest httpServletRequest)
     {
-//        final Optional<Bin> binOptional = binService.getBin(binIdentifier);
-//
-//        if (binOptional.isPresent())
-//        {
-//            final Bin bin = binOptional.get();
-//
-//            if (bin.getDiscardedAt() != null)
-//            {
-//                return ResponseEntity.status(HttpStatus.GONE).build();
-//            }
-//        }
-//        else
-//        {
-//            return ResponseEntity.notFound().build();
-//        }
+        final long requestStart = System.currentTimeMillis();
+        final Optional<Bin> binOptional = binService.getBin(binIdentifier);
+
+        if (binOptional.isPresent())
+        {
+            final Bin bin = binOptional.get();
+
+            if (bin.getDiscardedAt() != null)
+            {
+                return ResponseEntity.status(HttpStatus.GONE).build();
+            }
+        }
+        else
+        {
+            return ResponseEntity.notFound().build();
+        }
 
         final Map<String, String> httpHeaders = SpringUtil.extractHeaders(httpServletRequest);
         final String clientIp = SpringUtil.getIpAddress(httpServletRequest);
         final String httpVerb = httpServletRequest.getMethod();
         final LocalDateTime now = LocalDateTime.now();
 
-        final HttpRequest httpRequest = new HttpRequest(base64Encoder.encodeToString(requestBody.getBytes()), requestParams, httpHeaders, clientIp, httpVerb, now);
+        final long requestDuration = System.currentTimeMillis() - requestStart;
+        final HttpRequest httpRequest = new HttpRequest(base64Encoder.encodeToString(requestBody.getBytes()), requestParams, httpHeaders, clientIp, httpVerb, now, requestDuration);
 
         httpRequestService.emitHttpRequest(binIdentifier, Collections.singleton(httpRequest));
 

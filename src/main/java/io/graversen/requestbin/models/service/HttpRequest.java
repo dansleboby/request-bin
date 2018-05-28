@@ -11,8 +11,9 @@ public class HttpRequest
     private String ipAddress;
     private String httpVerb;
     private LocalDateTime createdAt;
+    private long requestDuration;
 
-    public HttpRequest(String requestBody, Map<String, String> queryParameters, Map<String, String> httpHeaders, String ipAddress, String httpVerb, LocalDateTime createdAt)
+    public HttpRequest(String requestBody, Map<String, String> queryParameters, Map<String, String> httpHeaders, String ipAddress, String httpVerb, LocalDateTime createdAt, long requestDuration)
     {
         this.requestBody = requestBody;
         this.queryParameters = queryParameters;
@@ -20,5 +21,6 @@ public class HttpRequest
         this.ipAddress = ipAddress;
         this.httpVerb = httpVerb;
         this.createdAt = createdAt;
+        this.requestDuration = requestDuration;
     }
 }
