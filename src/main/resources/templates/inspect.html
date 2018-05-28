@@ -6,8 +6,8 @@
     <title>Hello Bulma!</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.3/jquery.timeago.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.3/jquery.timeago.min.js"></script>
     <script src="/js/ws.js"></script>
     <script src="/js/controls.js"></script>
 </head>
@@ -16,7 +16,7 @@
 <section class="section">
     <div class="container">
 
-        <h1 class="subtitle is-2">
+        <h1 class="title has-text-weight-light">
             Bin Inspection
         </h1>
 
@@ -41,16 +41,15 @@
         <div class="container">
             <div class="notification">
 
-                <div class="message is-primary">
-                    <p class="message-header">Request shiz</p>
+                <div class="message is-link">
                     <p class="message-body">
-
+                        <strong></strong> July 17, 2008 <small>(<time class="timeago" datetime="2008-07-17T09:24:17Z" title="July 17, 2008"></time></small>) &mdash; <strong>HTTP Method: </strong> POST &mdash; <strong>Response time: </strong> 123 ms.
                     </p>
                 </div>
 
                 <table class="table is-bordered is-fullwidth">
                     <thead>
-                    <th>HTTP Headers</th>
+                    <th class="has-text-link">HTTP Headers</th>
                     </thead>
                     <tbody>
                     <tr>
@@ -64,7 +63,7 @@
 
                 <table class="table striped is-bordered is-fullwidth">
                     <thead>
-                    <th>Query Parameters</th>
+                    <th class="has-text-link">Query Parameters</th>
                     </thead>
                     <tbody>
                     <tr>
@@ -76,10 +75,22 @@
                     </tbody>
                 </table>
 
-                <h6 class="subtitle is-6">Request Body</h6>
+                <table class="table striped is-bordered is-fullwidth">
+                    <thead>
+                    <th class="has-text-link">Request Body</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
 <pre>{
     "test": "hest"
 }</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
             </div>
         </div>
 

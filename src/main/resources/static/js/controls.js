@@ -1,4 +1,6 @@
 $( document ).ready(function() {
+    $("time.timeago").timeago();
+
     $("#play-pause-btn").click(function() {
         isPaused = !isPaused;
         adjustIcon();
