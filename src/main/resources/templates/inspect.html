@@ -38,16 +38,18 @@
 
         <hr>
 
-        <div class="container">
+        <div id="http-request-template" class="container">
             <div class="notification">
 
                 <div class="message is-link">
                     <p class="message-body">
-                        <strong></strong> July 17, 2008 <small>(<time class="timeago" datetime="2008-07-17T09:24:17Z" title="July 17, 2008"></time></small>) &mdash; <strong>HTTP Method: </strong> POST &mdash; <strong>Response time: </strong> 123 ms.
+                        <span id="timestamp">July 17, 2008</span> <small>(<time id="timeago-time" class="timeago" datetime="2008-07-17T09:24:17Z" title="July 17, 2008"></time></small>) &mdash;
+                        <strong>HTTP Method: </strong> <span id="http-request-method">POST</span> &mdash;
+                        <strong>Response time: </strong> <span id="http-request-response-time">123 ms.</span>
                     </p>
                 </div>
 
-                <table class="table is-bordered is-fullwidth">
+                <table id="http-request-headers" class="table is-bordered is-fullwidth">
                     <thead>
                     <th class="has-text-link">HTTP Headers</th>
                     </thead>
@@ -61,7 +63,7 @@
                     </tbody>
                 </table>
 
-                <table class="table striped is-bordered is-fullwidth">
+                <table id="http-request-query-parameters" class="table striped is-bordered is-fullwidth">
                     <thead>
                     <th class="has-text-link">Query Parameters</th>
                     </thead>
@@ -82,7 +84,7 @@
                     <tbody>
                     <tr>
                         <td>
-<pre>{
+<pre id="http-request-body-content">{
     "test": "hest"
 }</pre>
                         </td>
@@ -94,26 +96,66 @@
             </div>
         </div>
 
-        <!--<nav class="level is-mobile">-->
-            <!--<div class="level-item has-text-centered">-->
-                <!--<div>-->
-                    <!--<p class="heading">Latest Request</p>-->
-                    <!--<p class="title">12:00:00</p>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="level-item has-text-centered">-->
-                <!--<div>-->
-                    <!--<p class="heading">Request Count (Session)</p>-->
-                    <!--<p class="title">123</p>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="level-item has-text-centered">-->
-                <!--<div>-->
-                    <!--<p class="heading">Request Count (Total)</p>-->
-                    <!--<p class="title">2468</p>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</nav>-->
+        <hr>
+
+        <div id="http-request-template" class="container">
+            <div class="notification">
+
+                <div class="message is-link">
+                    <p class="message-body">
+                        <span id="timestamp">July 17, 2008</span> <small>(<time id="timeago-time" class="timeago" datetime="2008-07-17T09:24:17Z" title="July 17, 2008"></time></small>) &mdash;
+                        <strong>HTTP Method: </strong> <span id="http-request-method">POST</span> &mdash;
+                        <strong>Response time: </strong> <span id="http-request-response-time">123 ms.</span>
+                    </p>
+                </div>
+
+                <table id="http-request-headers" class="table is-bordered is-fullwidth">
+                    <thead>
+                    <th class="has-text-link">HTTP Headers</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><strong>Test1:</strong> Value1</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Test2:</strong> Value2</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table id="http-request-query-parameters" class="table striped is-bordered is-fullwidth">
+                    <thead>
+                    <th class="has-text-link">Query Parameters</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><strong>Test1:</strong> Value1</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Test2:</strong> Value2</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table class="table striped is-bordered is-fullwidth">
+                    <thead>
+                    <th class="has-text-link">Request Body</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+<pre id="http-request-body-content">{
+    "test": "hest"
+}</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+
 
     </div>
 </section>
