@@ -8,8 +8,9 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.3/jquery.timeago.min.js"></script>
-    <script src="/js/ws.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
     <script src="/js/controls.js"></script>
+    <script src="/js/ws.js"></script>
 </head>
 <body>
 
@@ -39,6 +40,7 @@
         <hr>
 
         <div id="http-request-template" class="container">
+
             <div class="notification">
 
                 <div class="message is-link">
@@ -92,70 +94,8 @@
                     </tbody>
                 </table>
 
-
             </div>
         </div>
-
-        <hr>
-
-        <div id="http-request-template" class="container">
-            <div class="notification">
-
-                <div class="message is-link">
-                    <p class="message-body">
-                        <span id="timestamp">July 17, 2008</span> <small>(<time id="timeago-time" class="timeago" datetime="2008-07-17T09:24:17Z" title="July 17, 2008"></time></small>) &mdash;
-                        <strong>HTTP Method: </strong> <span id="http-request-method">POST</span> &mdash;
-                        <strong>Response time: </strong> <span id="http-request-response-time">123 ms.</span>
-                    </p>
-                </div>
-
-                <table id="http-request-headers" class="table is-bordered is-fullwidth">
-                    <thead>
-                    <th class="has-text-link">HTTP Headers</th>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><strong>Test1:</strong> Value1</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Test2:</strong> Value2</td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <table id="http-request-query-parameters" class="table striped is-bordered is-fullwidth">
-                    <thead>
-                    <th class="has-text-link">Query Parameters</th>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><strong>Test1:</strong> Value1</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Test2:</strong> Value2</td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <table class="table striped is-bordered is-fullwidth">
-                    <thead>
-                    <th class="has-text-link">Request Body</th>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-<pre id="http-request-body-content">{
-    "test": "hest"
-}</pre>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-
-            </div>
-        </div>
-
 
     </div>
 </section>

@@ -49,7 +49,18 @@ function showOrQueue(httpRequest) {
 }
 
 function showOne(httpRequest) {
-    console.log(JSON.parse(httpRequest));
+    var httpRequestObj = JSON.parse(httpRequest);
+    console.log(httpRequestObj);
+
+    // $("#")
+    $("#http-request-body-content").text(window.atob(httpRequestObj.requestBody));
+    $("#http-request-response-time").text(httpRequestObj.requestDuration);
+
+    $("#timeago-time").attr("datetime", httpRequestObj.createdAt).attr("title", httpRequestObj.createdAt).text(getTimestampFormatted(httpRequestObj.createdAt));
+
+    getTimestampFormatted(httpRequestObj.createdAt);
+
+    $("time.timeago").timeago();
 }
 
 function showNext() {
@@ -64,4 +75,8 @@ function showAll() {
     for (var i = 0; i < currentCount; i++) {
         showNext();
     }
+}
+
+function getTimestampFormatted(iso8601Date) {
+    return moment(iso8601Date).format("YYYY-MM-DD HH:mm:ss.SSS");
 }
