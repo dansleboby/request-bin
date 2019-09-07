@@ -6,6 +6,7 @@ import io.graversen.requestbin.data.mysql.IRequestBinRepository;
 import io.graversen.requestbin.data.mysql.RequestBinEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 
 @Configuration
 @RequiredArgsConstructor
+@ComponentScan(basePackages = "io.graversen.requestbin.service")
 public class AppConfig {
     private final IRequestBinRepository requestBinRepository;
     private final IRequestByRequestBinRepository requestByRequestBinRepository;
