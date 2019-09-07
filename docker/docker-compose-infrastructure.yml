@@ -1,0 +1,25 @@
+version: 3.7
+services:
+  cassandra:
+    container_name: request-bin-cassandra
+    image: cassandra:3.11.0
+    volumes:
+      - cassandra-volume
+    ports:
+      - 9042:9042
+  mysql:
+    container_name: request-bin-mysql
+    image: mysql:8.0.17
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - mysql-volume
+    ports:
+      - 3306:3306
+volumes:
+  cassandra-volume:
+    name: request-bin-cassandra
+    external: false
+  mysql-volume:
+    name: request-bin-mysql
+    external: false
