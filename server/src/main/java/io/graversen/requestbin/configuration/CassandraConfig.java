@@ -1,10 +1,10 @@
 package io.graversen.requestbin.configuration;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
+import org.springframework.data.cassandra.repository.config.EnableReactiveCassandraRepositories;
 
 @Configuration
-@EnableCassandraRepositories(basePackages = {"io.graversen.requestbin.data.cassandra"})
+@EnableReactiveCassandraRepositories(basePackages = {"io.graversen.requestbin.data.cassandra"})
 public class CassandraConfig {
 
 }
