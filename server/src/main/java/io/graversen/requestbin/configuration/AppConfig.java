@@ -29,7 +29,7 @@ public class AppConfig {
 
         requestByRequestBinRepository.deleteAll().block();
         requestByRequestBinRepository.save(
-                new RequestByRequestBinEntity("test", LocalDateTime.now(), "body", "query params", "http headers", "ip address", "GET", 1234L)
+                new RequestByRequestBinEntity("test", "body", "query params", "http headers", "ip address", "GET", "dunno lol")
         ).block();
         requestByRequestBinRepository.findAll().collectList().block();
     }

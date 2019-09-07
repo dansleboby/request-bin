@@ -18,7 +18,7 @@ public class RequestByRequestBinEntity {
 
     @NonNull
     @PrimaryKeyColumn(name = "created_at")
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @NonNull
     @Column("request_body")
@@ -42,5 +42,5 @@ public class RequestByRequestBinEntity {
 
     @NonNull
     @Column("request_duration")
-    private Long requestDuration;
+    private String requestDuration;
 }
