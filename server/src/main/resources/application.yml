@@ -10,8 +10,5 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/request_bin?createDatabaseIfNotExist=true
     username: root
-  data:
-    cassandra:
-      schema-action: recreate_drop_unused
 server:
   port: 8080

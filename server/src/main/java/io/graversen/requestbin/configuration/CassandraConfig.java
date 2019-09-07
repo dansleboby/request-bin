@@ -2,6 +2,7 @@ package io.graversen.requestbin.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.AbstractReactiveCassandraConfiguration;
+import org.springframework.data.cassandra.config.SchemaAction;
 import org.springframework.data.cassandra.core.cql.keyspace.CreateKeyspaceSpecification;
 import org.springframework.data.cassandra.repository.config.EnableReactiveCassandraRepositories;
 
@@ -23,5 +24,15 @@ public class CassandraConfig extends AbstractReactiveCassandraConfiguration {
                         .withSimpleReplication();
 
         return List.of(specification);
+    }
+
+    @Override
+    public SchemaAction getSchemaAction() {
+        return SchemaAction.RECREATE_DROP_UNUSED;
+    }
+
+    @Override
+    public String[] getEntityBasePackages() {
+        return new String[]{"io.graversen.requestbin.data.cassandra"};
     }
 }

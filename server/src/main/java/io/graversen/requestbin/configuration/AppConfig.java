@@ -1,5 +1,7 @@
 package io.graversen.requestbin.configuration;
 
+import io.graversen.requestbin.data.cassandra.IRequestByRequestBinRepository;
+import io.graversen.requestbin.data.cassandra.RequestByRequestBinEntity;
 import io.graversen.requestbin.data.mysql.IRequestBinRepository;
 import io.graversen.requestbin.data.mysql.RequestBinEntity;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class AppConfig {
     private final IRequestBinRepository requestBinRepository;
+    private final IRequestByRequestBinRepository requestByRequestBinRepository;
 
     @EventListener(ApplicationReadyEvent.class)
     public void onApplicationReady() {
@@ -21,5 +24,11 @@ public class AppConfig {
         requestBinRepository.save(
                 new RequestBinEntity("test", LocalDateTime.now().plus(Duration.ofDays(1)), "test")
         );
+
+        requestByRequestBinRepository.deleteAll().block();
+        requestByRequestBinRepository.save(
+                new RequestByRequestBinEntity("test", LocalDateTime.now(), "body", "query params", "http headers", "ip address", "GET", 1234L)
+        ).block();
+        requestByRequestBinRepository.findAll().collectList().block();
     }
 }

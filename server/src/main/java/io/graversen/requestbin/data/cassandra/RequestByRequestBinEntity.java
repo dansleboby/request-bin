@@ -10,7 +10,7 @@ import org.springframework.data.cassandra.core.mapping.Table;
 import java.time.LocalDateTime;
 
 @Data
-@Table("hashes_by_algorithm")
+@Table("request_by_request_bin")
 public class RequestByRequestBinEntity {
     @NonNull
     @PrimaryKeyColumn(name = "bin_id", type = PrimaryKeyType.PARTITIONED)
