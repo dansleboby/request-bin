@@ -4,29 +4,29 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/**/dictionaries
-.idea/**/shelf
+archive/.idea/**/workspace.xml
+archive/.idea/**/tasks.xml
+archive/.idea/**/dictionaries
+archive/.idea/**/shelf
 
 # Sensitive or high-churn files
-.idea/**/dataSources/
-.idea/**/dataSources.ids
-.idea/**/dataSources.local.xml
-.idea/**/sqlDataSources.xml
-.idea/**/dynamic.xml
-.idea/**/uiDesigner.xml
+archive/.idea/**/dataSources/
+archive/.idea/**/dataSources.ids
+archive/.idea/**/dataSources.local.xml
+archive/.idea/**/sqlDataSources.xml
+archive/.idea/**/dynamic.xml
+archive/.idea/**/uiDesigner.xml
 
 # Gradle
-.idea/**/gradle.xml
-.idea/**/libraries
+archive/.idea/**/gradle.xml
+archive/.idea/**/libraries
 
 # CMake
 cmake-build-debug/
 cmake-build-release/
 
 # Mongo Explorer plugin
-.idea/**/mongoSettings.xml
+archive/.idea/**/mongoSettings.xml
 
 # File-based project format
 *.iws
@@ -41,7 +41,7 @@ out/
 atlassian-ide-plugin.xml
 
 # Cursive Clojure plugin
-.idea/replstate.xml
+archive/.idea/replstate.xml
 
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
@@ -50,7 +50,7 @@ crashlytics-build.properties
 fabric.properties
 
 # Editor-based Rest Client
-.idea/httpRequests
+archive/.idea/httpRequests
 ### Maven template
 target/
 pom.xml.tag
