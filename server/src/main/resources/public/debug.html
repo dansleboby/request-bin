@@ -1,0 +1,9 @@
+<html>
+<h1>Debug Page</h1>
+
+<script>
+    const eventSource = new EventSource('/test/stream');
+    eventSource.onmessage = e => console.log(e);
+</script>
+
+</html>
