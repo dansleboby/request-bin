@@ -22,7 +22,6 @@ public class Clients {
     }
 
     public void emit(String binId, RequestEvent requestEvent) {
-        System.out.println("Clients.emit");
         requestEventConsumers.stream()
                 .filter(client -> client.getBinId().equals(binId))
                 .forEach(client -> client.getSink().accept(requestEvent));
