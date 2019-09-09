@@ -1,6 +1,8 @@
 package io.graversen.requestbin.util;
 
 import io.graversen.trunk.network.IpAddressUtils;
+import io.graversen.trunk.random.RandomUtils;
+import io.graversen.trunk.random.RandomUtilsFactory;
 import lombok.experimental.UtilityClass;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -11,8 +13,13 @@ import java.util.UUID;
 
 @UtilityClass
 public class Utils {
+    private static final RandomUtils RANDOM_UTILS = RandomUtilsFactory.defaultRandomUtils();
     private static final IpAddressUtils IP_ADDRESS_UTILS = new IpAddressUtils();
     private static final Duration DEFAULT_BIN_EXPIRY = Duration.ofDays(1);
+
+    public static String clientId() {
+        return RANDOM_UTILS.randomString(16, true, true, false);
+    }
 
     public static String binId() {
         return UUID.randomUUID().toString();
