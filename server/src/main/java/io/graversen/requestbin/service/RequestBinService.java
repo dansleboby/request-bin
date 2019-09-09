@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -72,16 +73,21 @@ public class RequestBinService {
     }
 
     private Function<RequestByRequestBinEntity, Request> requestDtoMapper() {
-        return entity -> new Request(
-                entity.getBinId(),
-                entity.getCreatedAt(),
-                entity.getRequestBody(),
-                entity.getQueryParameters(),
-                entity.getHttpHeaders(),
-                entity.getIpAddress(),
-                entity.getHttpVerb(),
-                entity.getRequestDuration()
-        );
+        return entity -> {
+            final Map<String, String> queryParameters = SERIALIZER.deserialize(entity.getQueryParameters(), Map.class);
+            final Map<String, String> httpHeaders = SERIALIZER.deserialize(entity.getHttpHeaders(), Map.class);
+
+            return new Request(
+                    entity.getBinId(),
+                    entity.getCreatedAt(),
+                    entity.getRequestBody(),
+                    queryParameters,
+                    httpHeaders,
+                    entity.getIpAddress(),
+                    entity.getHttpVerb(),
+                    entity.getRequestDuration()
+            );
+        };
     }
 
     private Consumer<RequestEvent> emitRequestEvent(String binId) {
