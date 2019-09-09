@@ -19,7 +19,7 @@ public class RequestBinEntity {
     private Long id;
 
     @NonNull
-    @Column(name = "bin_id", nullable = false)
+    @Column(name = "bin_id", nullable = false, unique = true)
     private String binId;
 
     @Column(name = "created_at", nullable = false)

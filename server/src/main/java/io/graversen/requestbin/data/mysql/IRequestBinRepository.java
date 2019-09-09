@@ -9,4 +9,6 @@ public interface IRequestBinRepository extends JpaRepository<RequestBinEntity, L
     Collection<RequestBinEntity> findByOpenTrue();
 
     Optional<RequestBinEntity> findByBinId(String binId);
+
+    boolean existsByBinIdAndOpenTrue(String binId);
 }

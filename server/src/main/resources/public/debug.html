@@ -3,7 +3,7 @@
 
 <script>
     const eventSource = new EventSource('/test/stream');
-    eventSource.onmessage = e => console.log(e);
+    eventSource.onmessage = event => console.log(event);
 </script>
 
 </html>
