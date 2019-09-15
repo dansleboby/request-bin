@@ -1,26 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    useEffect(() => {
+        const eventSource = new EventSource('http://localhost:8080/test/stream');
+        eventSource.onmessage = e => console.log(e);
+    }, []);
+
+    return (
+        <section className="section">
+            <div className="container">
+                <h1 className="title">
+                    Bucket
+                </h1>
+                <hr/>
+            </div>
+        </section>
+    );
 }
 
 export default App;
