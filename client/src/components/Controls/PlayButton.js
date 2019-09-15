@@ -1,6 +1,6 @@
 import React from 'react';
 
-function playButton() {
+const playButton = () => {
     let isPlaying = true;
     const iconPlay = "fas fa-play";
     const iconPause = "fas fa-pause";
@@ -10,6 +10,6 @@ function playButton() {
             <i className={iconPause}/>
         </a>
     );
-}
+};
 
 export default playButton;
