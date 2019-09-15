@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import './App.scss';
-import Controls from "./components/Controls/Controls";
+import Controls from "./components/controls/Controls";
+import ControlPanel from "./containers/ControlPanel/ControlPanel";
 
 function App() {
 
@@ -15,8 +16,7 @@ function App() {
                 <h1 className="title">
                     Request Bin
                 </h1>
-                <Controls/>
-                <hr/>
+                <ControlPanel/>
             </div>
         </section>
     );
