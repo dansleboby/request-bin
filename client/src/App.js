@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import logo from './logo.svg';
 import './App.scss';
+import Controls from "./components/Controls/Controls";
 
 function App() {
 
@@ -13,8 +13,9 @@ function App() {
         <section className="section">
             <div className="container">
                 <h1 className="title">
-                    Bucket
+                    Request Bin
                 </h1>
+                <Controls/>
                 <hr/>
             </div>
         </section>
