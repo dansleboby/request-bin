@@ -5,7 +5,7 @@ import ControlPanel from "./containers/ControlPanel/ControlPanel";
 import useRequestBin from "./hooks/UseRequestBin";
 
 function App() {
-    useRequestBin('test', e => console.log(e));
+    // useRequestBin('test', e => console.log(e));
 
     // useEffect(() => {
     //     const eventSource = new EventSource('http://localhost:8080/test/stream');
@@ -18,7 +18,7 @@ function App() {
                 <h1 className="title">
                     Request Bin
                 </h1>
-                <ControlPanel/>
+                <ControlPanel binId='test'/>
             </div>
         </section>
     );

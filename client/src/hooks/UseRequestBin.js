@@ -14,7 +14,7 @@ function useRequestBin(binId: string, callback: function): void {
     useEffect(() => {
         const eventSource = new EventSource(`http://localhost:8080/${binId}/stream`);
         eventSource.onmessage = event => eventDispatcher(callback, event);
-    });
+    }, []);
 }
 
 export default useRequestBin;

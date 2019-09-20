@@ -5,7 +5,7 @@ import PlayButton from "./PlayButton";
 import Root from "../../containers/Root/Root";
 import Status from "./Status";
 
-const controls = () => (
+const Controls = () => (
     <Root>
         <div className="buttons are-medium">
             <PlayButton/>
@@ -16,4 +16,4 @@ const controls = () => (
     </Root>
 );
 
-export default controls;
+export default Controls;
