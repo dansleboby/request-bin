@@ -6,7 +6,7 @@ function Status(props) {
 
     return (
         <p className="has-text-grey">
-            Viewing request <strong>1</strong> of <strong>1</strong>.
+            Viewing request <strong>{props.current}</strong> of <strong>{props.total}</strong>.
             Latest ❤️ from server: {latestUpdateElement}
         </p>
     );

@@ -6,26 +6,30 @@ import useRequestBin from "../../hooks/UseRequestBin";
 
 const httpRequestHistory = [];
 
-const updateHistory = (httpRequest) => {
-    if (httpRequest !== null) {
-        httpRequestHistory.push(httpRequest);
-    }
-};
-
 const ControlPanel = (props) => {
+    const updateHistory = (httpRequest) => {
+        if (httpRequest !== null) {
+            httpRequestHistory.push(httpRequest);
+            setLatestHttpRequest(httpRequest);
+        }
+    };
+
     const [latestHttpRequest, setLatestHttpRequest] = useState(null);
     const [latestUpdate, setLatestUpdate] = useState(null);
+    const selectedHttpRequest = latestHttpRequest;
 
-    useEffect(() => updateHistory(latestHttpRequest));
-    useRequestBin(props.binId, setLatestHttpRequest, setLatestUpdate);
-
-    console.log(...httpRequestHistory);
+    // useEffect(() => updateHistory(latestHttpRequest));
+    useRequestBin(props.binId, updateHistory, setLatestUpdate);
 
     return (
         <Root>
-            <Controls latestUpdate={latestUpdate}/>
+            <Controls
+                latestUpdate={latestUpdate}
+                current={httpRequestHistory.length + 1}
+                total={httpRequestHistory.length + 1}
+            />
             <hr/>
-            <HttpRequest/>
+            <HttpRequest httpRequest={selectedHttpRequest}/>
         </Root>
     );
 };

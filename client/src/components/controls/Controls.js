@@ -12,7 +12,7 @@ const Controls = (props) => (
             <PreviousButton/>
             <NextButton/>
         </div>
-        <Status latestUpdate={props.latestUpdate}/>
+        <Status latestUpdate={props.latestUpdate} current={props.current} total={props.total}/>
     </Root>
 );
 
