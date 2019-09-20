@@ -5,14 +5,14 @@ import PlayButton from "./PlayButton";
 import Root from "../../containers/Root/Root";
 import Status from "./Status";
 
-const Controls = () => (
+const Controls = (props) => (
     <Root>
         <div className="buttons are-medium">
             <PlayButton/>
             <PreviousButton/>
             <NextButton/>
         </div>
-        <Status/>
+        <Status latestUpdate={props.latestUpdate}/>
     </Root>
 );
 
