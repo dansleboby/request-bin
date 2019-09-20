@@ -3,6 +3,7 @@ import Root from "../Root/Root";
 import Controls from "../../components/controls/Controls";
 import HttpRequest from "../HttpRequest/HttpRequest";
 import useRequestBin from "../../hooks/UseRequestBin";
+import BlankHttpRequest from "../HttpRequest/BlankHttpRequest";
 
 const httpRequestHistory = [];
 
@@ -21,15 +22,20 @@ const ControlPanel = (props) => {
     // useEffect(() => updateHistory(latestHttpRequest));
     useRequestBin(props.binId, updateHistory, setLatestUpdate);
 
+    const httpRequest = selectedHttpRequest === null
+        ? <BlankHttpRequest/>
+        : <HttpRequest httpRequest={selectedHttpRequest}/>;
+
+
     return (
         <Root>
             <Controls
                 latestUpdate={latestUpdate}
-                current={httpRequestHistory.length + 1}
-                total={httpRequestHistory.length + 1}
+                current={httpRequestHistory.length}
+                total={httpRequestHistory.length}
             />
             <hr/>
-            <HttpRequest httpRequest={selectedHttpRequest}/>
+            {httpRequest}
         </Root>
     );
 };

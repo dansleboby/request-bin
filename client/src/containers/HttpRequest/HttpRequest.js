@@ -5,7 +5,9 @@ import HttpQueryString from "../../components/http/QueryString/HttpQueryString";
 import HttpBody from "../../components/http/Body/HttpBody";
 
 const  HttpRequest = (props) => {
-    console.log(props);
+    const request = props.httpRequest;
+    console.log(request);
+
     return (
         <Root>
             <div className="container">
@@ -16,17 +18,17 @@ const  HttpRequest = (props) => {
                         </div>
                         <div className="column">
                             <p>
-                                <strong>Received at:</strong>
+                                <strong>Received at:</strong> {request.createdAt}
                             </p>
                         </div>
                         <div className="column">
                             <p>
-                                <strong>Response time:</strong>
+                                <strong>Response time:</strong> {request.requestDuration}
                             </p>
                         </div>
                         <div className="column">
                             <p>
-                                <strong>Request ID:</strong>
+                                <strong>HTTP Verb:</strong> {request.httpVerb}
                             </p>
                         </div>
                     </div>
