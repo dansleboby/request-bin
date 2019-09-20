@@ -14,14 +14,16 @@ const updateHistory = (httpRequest) => {
 
 const ControlPanel = (props) => {
     const [latestHttpRequest, setLatestHttpRequest] = useState(null);
-    useEffect(() => updateHistory(latestHttpRequest));
-    useRequestBin(props.binId, setLatestHttpRequest);
+    const [latestUpdate, setLatestUpdate] = useState(null);
 
-    console.log(httpRequestHistory);
+    useEffect(() => updateHistory(latestHttpRequest));
+    useRequestBin(props.binId, setLatestHttpRequest, setLatestUpdate);
+
+    console.log(...httpRequestHistory);
 
     return (
         <Root>
-            <Controls/>
+            <Controls latestUpdate={latestUpdate}/>
             <hr/>
             <HttpRequest/>
         </Root>
