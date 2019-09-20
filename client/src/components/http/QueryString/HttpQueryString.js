@@ -1,6 +1,6 @@
 import React from 'react';
 
-const httpQueryString = () => (
+const HttpQueryString = () => (
     <div className="card">
         <header className="card-header has-background-light">
             <p className="card-header-title">
@@ -16,4 +16,4 @@ const httpQueryString = () => (
 
 );
 
-export default httpQueryString;
+export default HttpQueryString;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const playButton = () => {
+const PlayButton = () => {
     let isPlaying = true;
     const iconPlay = "fas fa-play";
     const iconPause = "fas fa-pause";
@@ -12,4 +12,4 @@ const playButton = () => {
     );
 };
 
-export default playButton;
+export default PlayButton;

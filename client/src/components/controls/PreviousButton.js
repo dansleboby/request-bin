@@ -1,9 +1,9 @@
 import React from 'react';
 
-const previousButton = () => (
+const PreviousButton = () => (
     <a className="button is-outlined">
         <i className="fas fa-chevron-left"></i>
     </a>
 );
 
-export default previousButton;
+export default PreviousButton;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const httpHeaders = () => (
+const HttpHeaders = () => (
     <div className="card">
         <header className="card-header has-background-light">
             <p className="card-header-title">
@@ -15,4 +15,4 @@ const httpHeaders = () => (
     </div>
 );
 
-export default httpHeaders;
+export default HttpHeaders;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const httpBody = () => (
+const HttpBody = () => (
     <div className="card">
         <header className="card-header has-background-light">
             <p className="card-header-title">
@@ -15,4 +15,4 @@ const httpBody = () => (
     </div>
 );
 
-export default httpBody;
+export default HttpBody;

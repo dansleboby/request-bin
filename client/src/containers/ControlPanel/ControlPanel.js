@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Root from "../Root/Root";
 import Controls from "../../components/controls/Controls";
 import HttpRequest from "../HttpRequest/HttpRequest";
 
-const controlPanel = () => (
-    <Root>
-        <Controls/>
-        <hr/>
-        <HttpRequest/>
-    </Root>
-);
+const ControlPanel = () => {
+    const [latestHttpRequest, setLatestHttpRequest] = useState(null);
 
-export default controlPanel;
+    return (
+        <Root>
+            <Controls/>
+            <hr/>
+            <HttpRequest/>
+        </Root>
+    );
+};
+
+export default ControlPanel;

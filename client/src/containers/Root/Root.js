@@ -1,3 +1,3 @@
-const root = (props) => props.children;
+const Root = (props) => props.children;
 
-export default root;
+export default Root;

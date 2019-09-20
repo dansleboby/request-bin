@@ -4,10 +4,10 @@ import HttpHeaders from "../../components/http/HttpHeaders/HttpHeaders";
 import HttpQueryString from "../../components/http/QueryString/HttpQueryString";
 import HttpBody from "../../components/http/Body/HttpBody";
 
-const httpRequest = () => (
+const HttpRequest = () => (
     <Root>
         <div className="container">
-            <div className="notification">
+            <div className="notification is-warning">
                 <div className="columns">
                     <div className="column">
                         <strong>HTTP Request</strong>
@@ -39,4 +39,4 @@ const httpRequest = () => (
     </Root>
 );
 
-export default httpRequest;
+export default HttpRequest;
