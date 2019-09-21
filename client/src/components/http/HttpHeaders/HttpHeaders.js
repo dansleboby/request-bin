@@ -1,10 +1,10 @@
 import React from 'react';
 
-const HttpHeaders = () => (
+const HttpHeaders = (props) => (
     <div className="card">
         <header className="card-header has-background-light">
             <p className="card-header-title">
-                Headers
+                HTTP Headers
             </p>
         </header>
         <div className="card-content">

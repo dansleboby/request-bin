@@ -4,9 +4,13 @@ import HttpHeaders from "../../components/http/HttpHeaders/HttpHeaders";
 import HttpQueryString from "../../components/http/QueryString/HttpQueryString";
 import HttpBody from "../../components/http/Body/HttpBody";
 
-const  HttpRequest = (props) => {
+const HttpRequest = (props) => {
     const request = props.httpRequest;
     console.log(request);
+
+    const httpHeaders = Object.entries(request.httpHeaders).map(([key, value]) => ({key,value}));
+    const queryParameters = Object.entries(request.queryParameters).map(([key, value]) => ({key,value}));
+    const httpBody = atob(request.encodedRequestBody);
 
     return (
         <Root>
@@ -35,11 +39,11 @@ const  HttpRequest = (props) => {
                 </div>
             </div>
             <br/>
-            <HttpHeaders/>
+            <HttpHeaders httpHeaders={httpHeaders}/>
             <br/>
-            <HttpQueryString/>
+            <HttpQueryString queryParameters={queryParameters}/>
             <br/>
-            <HttpBody/>
+            <HttpBody httpBody={httpBody}/>
         </Root>
     );
 };

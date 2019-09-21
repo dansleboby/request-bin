@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HttpBody = () => (
+const HttpBody = (props) => (
     <div className="card">
         <header className="card-header has-background-light">
             <p className="card-header-title">
@@ -9,7 +9,9 @@ const HttpBody = () => (
         </header>
         <div className="card-content">
             <div className="content">
-                <code>// TODO</code>
+                <pre>
+                    <code>{props.httpBody}</code>
+                </pre>
             </div>
         </div>
     </div>
