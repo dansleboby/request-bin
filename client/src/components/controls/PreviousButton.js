@@ -1,7 +1,7 @@
 import React from 'react';
 
-const PreviousButton = () => (
-    <a className="button is-outlined">
+const PreviousButton = (props) => (
+    <a onClick={props.goBackClicked} className="button is-outlined">
         <i className="fas fa-chevron-left"></i>
     </a>
 );

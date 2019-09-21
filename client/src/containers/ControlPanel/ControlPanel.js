@@ -5,24 +5,43 @@ import HttpRequest from "../HttpRequest/HttpRequest";
 import useRequestBin from "../../hooks/UseRequestBin";
 import BlankHttpRequest from "../HttpRequest/BlankHttpRequest";
 
-const httpRequestHistory = [];
-
 const ControlPanel = (props) => {
-    const updateHistory = (httpRequest) => {
-        if (httpRequest !== null) {
-            httpRequestHistory.push(httpRequest);
-            setLatestHttpRequest(httpRequest);
+    const [httpRequestHistory, setHttpRequestHistory] = useState([]);
+    const [latestUpdate, setLatestUpdate] = useState(null);
+    const [index, setIndex] = useState(0);
+    const [isPaused, setIsPaused] = useState(false);
+
+    const selectedHttpRequest = httpRequestHistory[index - 1];
+
+    const playClicked = () => {
+        setIsPaused(isPaused => !isPaused);
+        setIndex(httpRequestHistory.length);
+    };
+
+    const goBackClicked = () => {
+        setIsPaused(true);
+
+        if (index !== 1) {
+            setIndex(index => index - 1);
         }
     };
 
-    const [latestHttpRequest, setLatestHttpRequest] = useState(null);
-    const [latestUpdate, setLatestUpdate] = useState(null);
-    const selectedHttpRequest = latestHttpRequest;
+    const goForwardClicked = () => {
+        if (index !== httpRequestHistory.length) {
+            setIndex(index => index + 1);
+        }
+    };
+
+    const updateHttpRequest = (httpRequest) => {
+        setHttpRequestHistory(previousHistory => [...previousHistory, httpRequest]);
+
+        setIndex(index => index + 1);
+    };
 
     // useEffect(() => updateHistory(latestHttpRequest));
-    useRequestBin(props.binId, updateHistory, setLatestUpdate);
+    useRequestBin(props.binId, updateHttpRequest, setLatestUpdate);
 
-    const httpRequest = selectedHttpRequest === null
+    const httpRequest = selectedHttpRequest === undefined
         ? <BlankHttpRequest/>
         : <HttpRequest httpRequest={selectedHttpRequest}/>;
 
@@ -31,8 +50,12 @@ const ControlPanel = (props) => {
         <Root>
             <Controls
                 latestUpdate={latestUpdate}
-                current={httpRequestHistory.length}
+                current={index}
                 total={httpRequestHistory.length}
+                playClickHandler={playClicked}
+                goBackHandler={goBackClicked}
+                goForwardHandler={goForwardClicked}
+                isPaused={isPaused}
             />
             <hr/>
             {httpRequest}

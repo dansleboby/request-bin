@@ -6,7 +6,6 @@ import HttpBody from "../../components/http/Body/HttpBody";
 
 const HttpRequest = (props) => {
     const request = props.httpRequest;
-    console.log(request);
 
     const httpHeaders = Object.entries(request.httpHeaders).map(([key, value]) => ({key,value}));
     const queryParameters = Object.entries(request.queryParameters).map(([key, value]) => ({key,value}));

@@ -1,13 +1,12 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
-const PlayButton = () => {
-    let isPlaying = true;
+const PlayButton = (props) => {
     const iconPlay = "fas fa-play";
     const iconPause = "fas fa-pause";
 
     return (
-        <a className="button is-outlined">
-            <i className={iconPause}/>
+        <a onClick={props.playClickHandler} className="button is-outlined">
+            <i className={props.isPaused ? iconPlay : iconPause}/>
         </a>
     );
 };

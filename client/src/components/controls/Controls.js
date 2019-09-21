@@ -8,9 +8,9 @@ import Status from "./Status";
 const Controls = (props) => (
     <Root>
         <div className="buttons are-medium">
-            <PlayButton/>
-            <PreviousButton/>
-            <NextButton/>
+            <PlayButton isPaused={props.isPaused} playClickHandler={props.playClickHandler}/>
+            <PreviousButton goBackClicked={props.goBackHandler}/>
+            <NextButton goForwardClicked={props.goForwardHandler}/>
         </div>
         <Status latestUpdate={props.latestUpdate} current={props.current} total={props.total}/>
     </Root>
