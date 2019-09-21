@@ -1,6 +1,6 @@
 import React from 'react';
 
-const toHeaderRow = (header, value) => <tr><td><strong>{header}</strong></td><td>{value}</td></tr>;
+const toHeaderRow = (header, value) => <tr key={header}><td><strong>{header}</strong></td><td>{value}</td></tr>;
 
 const HttpHeaders = (props) => {
     const httpHeaders = props.httpHeaders;
@@ -21,7 +21,9 @@ const HttpHeaders = (props) => {
             <div className="card-content">
                 <div className="content">
                     <table className="table is-bordered">
-                        {httpHeadersElement}
+                        <tbody>
+                            {httpHeadersElement}
+                        </tbody>
                     </table>
                 </div>
             </div>
