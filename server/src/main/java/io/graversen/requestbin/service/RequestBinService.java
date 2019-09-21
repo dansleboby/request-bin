@@ -16,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -73,19 +75,23 @@ public class RequestBinService {
     }
 
     private Function<RequestByRequestBinEntity, Request> requestDtoMapper() {
+        final var dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
         return entity -> {
             final Map<String, String> queryParameters = SERIALIZER.deserialize(entity.getQueryParameters(), Map.class);
             final Map<String, String> httpHeaders = SERIALIZER.deserialize(entity.getHttpHeaders(), Map.class);
+            final String createdAt = entity.getCreatedAt().format(dateTimeFormatter);
+            final long durationMillis = Duration.parse(entity.getRequestDuration()).toMillis();
 
             return new Request(
                     entity.getBinId(),
-                    entity.getCreatedAt(),
+                    createdAt,
                     entity.getRequestBody(),
                     queryParameters,
                     httpHeaders,
                     entity.getIpAddress(),
                     entity.getHttpVerb(),
-                    entity.getRequestDuration()
+                    durationMillis
             );
         };
     }
