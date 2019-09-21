@@ -11,6 +11,10 @@ const ControlPanel = (props) => {
     const [index, setIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
 
+    if (index === 0 && httpRequestHistory.length > 0){
+        setIndex(1);
+    }
+
     const selectIndex = isPaused ? index : httpRequestHistory.length;
     const selectedHttpRequest = httpRequestHistory[selectIndex - 1];
 
@@ -22,8 +26,8 @@ const ControlPanel = (props) => {
     const goBackClicked = () => {
         setIsPaused(true);
 
-        if (index !== 1) {
-            setIndex(index => index - 1);
+        if (selectIndex > 1) {
+            setIndex(selectIndex - 1);
         }
     };
 

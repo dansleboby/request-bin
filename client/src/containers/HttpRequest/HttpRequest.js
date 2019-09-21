@@ -26,7 +26,7 @@ const HttpRequest = (props) => {
                         </div>
                         <div className="column">
                             <p>
-                                <strong>Response time:</strong> {request.requestDuration}
+                                <strong>Client IP:</strong> {request.ipAddress}
                             </p>
                         </div>
                         <div className="column">
