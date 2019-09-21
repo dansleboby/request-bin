@@ -11,7 +11,8 @@ const ControlPanel = (props) => {
     const [index, setIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
 
-    const selectedHttpRequest = httpRequestHistory[index - 1];
+    const selectIndex = isPaused ? index : httpRequestHistory.length;
+    const selectedHttpRequest = httpRequestHistory[selectIndex - 1];
 
     const playClicked = () => {
         setIsPaused(isPaused => !isPaused);
@@ -34,8 +35,6 @@ const ControlPanel = (props) => {
 
     const updateHttpRequest = (httpRequest) => {
         setHttpRequestHistory(previousHistory => [...previousHistory, httpRequest]);
-
-        setIndex(index => index + 1);
     };
 
     // useEffect(() => updateHistory(latestHttpRequest));
@@ -50,7 +49,7 @@ const ControlPanel = (props) => {
         <Root>
             <Controls
                 latestUpdate={latestUpdate}
-                current={index}
+                current={selectIndex}
                 total={httpRequestHistory.length}
                 playClickHandler={playClicked}
                 goBackHandler={goBackClicked}
