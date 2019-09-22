@@ -15,13 +15,18 @@ import io.graversen.trunk.io.serialization.json.GsonSerializer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -66,6 +71,14 @@ public class RequestBinService {
                 .subscribe(emitRequestEvent(createRequest.getBinId()));
     }
 
+    public void emitLatest(String binId, int amount) {
+        requestByRequestBinRepository.findAllByBinId(binId)
+                .limitRequest(amount)
+                .map(requestDtoMapper())
+                .map(RequestEvent::data)
+                .subscribe(emitRequestEvent(binId));
+    }
+
     public boolean requestBinExists(String binId) {
         return requestBinRepository.existsByBinIdAndOpenTrue(binId);
     }
@@ -78,10 +91,10 @@ public class RequestBinService {
         final var dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         return entity -> {
-            final Map<String, String> queryParameters = SERIALIZER.deserialize(entity.getQueryParameters(), Map.class);
-            final Map<String, String> httpHeaders = SERIALIZER.deserialize(entity.getHttpHeaders(), Map.class);
-            final String createdAt = entity.getCreatedAt().format(dateTimeFormatter);
-            final long durationMillis = Duration.parse(entity.getRequestDuration()).toMillis();
+            final Map<String, String> queryParameters = safeDeserialize(entity.getQueryParameters());
+            final Map<String, String> httpHeaders = safeDeserialize(entity.getHttpHeaders());
+            final String createdAt = safeParseDate(entity.getCreatedAt(), dateTimeFormatter);
+            final long durationMillis = safeParseDuration(entity.getRequestDuration());
 
             return new Request(
                     entity.getBinId(),
@@ -98,5 +111,29 @@ public class RequestBinService {
 
     private Consumer<RequestEvent> emitRequestEvent(String binId) {
         return requestEvent -> clients.emit(binId, requestEvent);
+    }
+
+    private Map<String, String> safeDeserialize(String data) {
+        try {
+            return SERIALIZER.deserialize(data, Map.class);
+        } catch (Exception e) {
+            return Map.of();
+        }
+    }
+
+    private String safeParseDate(LocalDateTime localDateTime, DateTimeFormatter dateTimeFormatter) {
+        try {
+            return localDateTime.format(dateTimeFormatter);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    private long safeParseDuration(String duration) {
+        try {
+            return Duration.parse(duration).toMillis();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }

@@ -28,6 +28,7 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 public class RequestBinController {
+    private static final int MAX_FETCH_COUNT = 100;
     private static final Base64.Encoder BASE_64_ENCODER = Base64.getEncoder();
     private final RequestBinService requestBinService;
     private final Clients clients;
@@ -99,7 +100,7 @@ public class RequestBinController {
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "{binId}/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "{binId}/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<Flux<RequestEvent>> requestStream(@PathVariable String binId) {
         if (!requestBinService.requestBinExists(binId)) {
             return ResponseEntity.notFound().build();
@@ -111,5 +112,24 @@ public class RequestBinController {
                 .doOnCancel(() -> clients.unregister(clientId));
 
         return ResponseEntity.ok(mergedEventStream);
+    }
+
+    @GetMapping(value = "{binId}/stream/{fetchCount}")
+    public ResponseEntity<Void> getLatest(@PathVariable String binId, @PathVariable Integer fetchCount) {
+        if (!requestBinService.requestBinExists(binId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (fetchCount < 0){
+            fetchCount = 0;
+        }
+
+        if (fetchCount > MAX_FETCH_COUNT) {
+            fetchCount = MAX_FETCH_COUNT;
+        }
+
+        requestBinService.emitLatest(binId, fetchCount);
+
+        return ResponseEntity.ok().build();
     }
 }
