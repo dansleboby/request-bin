@@ -7,7 +7,7 @@ import HttpBody from "../../components/http/Body/HttpBody";
 const  BlankHttpRequest = (props) => {
     return (
         <Root>
-            <h3 className="has-text-centered subtitle is-4">To start, send your first request to this bin! 🚀</h3>
+            <h3 className="has-text-centered subtitle is-4">To start, send an HTTP request to this bin! 🚀</h3>
         </Root>
     );
 };

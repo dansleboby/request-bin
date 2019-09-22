@@ -4,6 +4,7 @@ import PreviousButton from "./PreviousButton";
 import PlayButton from "./PlayButton";
 import Root from "../../containers/Root/Root";
 import Status from "./Status";
+import SyncButton from "./SyncButton";
 
 const Controls = (props) => (
     <Root>
@@ -11,6 +12,7 @@ const Controls = (props) => (
             <PlayButton isPaused={props.isPaused} playClickHandler={props.playClickHandler}/>
             <PreviousButton goBackClicked={props.goBackHandler}/>
             <NextButton goForwardClicked={props.goForwardHandler}/>
+            <SyncButton syncClicked={props.syncHandler}/>
         </div>
         <Status latestUpdate={props.latestUpdate} current={props.current} total={props.total}/>
     </Root>
