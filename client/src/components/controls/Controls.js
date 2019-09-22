@@ -12,7 +12,7 @@ const Controls = (props) => (
             <PlayButton isPaused={props.isPaused} playClickHandler={props.playClickHandler}/>
             <PreviousButton goBackClicked={props.goBackHandler}/>
             <NextButton goForwardClicked={props.goForwardHandler}/>
-            <SyncButton syncClicked={props.syncHandler}/>
+            <SyncButton isSynced={props.isSynced} syncClicked={props.syncHandler}/>
         </div>
         <Status latestUpdate={props.latestUpdate} current={props.current} total={props.total}/>
     </Root>

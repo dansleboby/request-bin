@@ -4,14 +4,16 @@ import Controls from "../../components/controls/Controls";
 import HttpRequest from "../HttpRequest/HttpRequest";
 import useRequestBin from "../../hooks/UseRequestBin";
 import BlankHttpRequest from "../HttpRequest/BlankHttpRequest";
+import requestBinClient from "../../http/RequestBinClient";
 
 const ControlPanel = (props) => {
     const [httpRequestHistory, setHttpRequestHistory] = useState([]);
     const [latestUpdate, setLatestUpdate] = useState(null);
     const [index, setIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
+    const [isSynced, setIsSynced] = useState(false);
 
-    if (index === 0 && httpRequestHistory.length > 0){
+    if (index === 0 && httpRequestHistory.length > 0) {
         setIndex(1);
     }
 
@@ -37,11 +39,18 @@ const ControlPanel = (props) => {
         }
     };
 
+    const syncClicked = () => {
+        if (!isSynced) {
+            setIsSynced(true);
+            setHttpRequestHistory([]);
+            requestBinClient.get(`/${props.binId}/stream/100`)
+        }
+    };
+
     const updateHttpRequest = (httpRequest) => {
         setHttpRequestHistory(previousHistory => [...previousHistory, httpRequest]);
     };
 
-    // useEffect(() => updateHistory(latestHttpRequest));
     useRequestBin(props.binId, updateHttpRequest, setLatestUpdate);
 
     const httpRequest = selectedHttpRequest === undefined
@@ -58,6 +67,8 @@ const ControlPanel = (props) => {
                 playClickHandler={playClicked}
                 goBackHandler={goBackClicked}
                 goForwardHandler={goForwardClicked}
+                syncHandler={syncClicked}
+                isSynced={isSynced}
                 isPaused={isPaused}
             />
             <hr/>

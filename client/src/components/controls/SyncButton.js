@@ -5,6 +5,7 @@ const SyncButton = (props) => (
         onClick={props.syncClicked}
         className="button is-outlined tooltip is-tooltip-right"
         data-tooltip="Retrieve the latest HTTP requests for this bin"
+        disabled={props.isSynced}
     >
         <i className="fas fa-sync"></i>
     </a>
