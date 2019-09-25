@@ -119,7 +119,9 @@ public class RequestBinController {
         final String clientId = Utils.clientId();
         final Flux<RequestEvent> eventStream = Flux.create(sink -> clients.register(clientId, binId, sink::next));
         final Flux<RequestEvent> mergedEventStream = Flux.merge(eventStream, StreamingUtils.heartBeatStream())
-                .doOnCancel(() -> clients.unregister(clientId));
+                .doOnCancel(() -> clients.unregister(clientId))
+                .doOnError(e -> clients.unregister(clientId))
+                .doOnTerminate(() -> clients.unregister(clientId));
 
         return ResponseEntity.ok(mergedEventStream);
     }
