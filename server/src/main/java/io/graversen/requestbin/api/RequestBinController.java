@@ -100,6 +100,16 @@ public class RequestBinController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping(value = "{binId}/status")
+    public ResponseEntity<Void> requestBinExists(@PathVariable String binId) {
+        if (!requestBinService.requestBinExists(binId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+
     @GetMapping(value = "{binId}/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<Flux<RequestEvent>> requestStream(@PathVariable String binId) {
         if (!requestBinService.requestBinExists(binId)) {
