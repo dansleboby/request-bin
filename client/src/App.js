@@ -1,27 +1,21 @@
-import React, {useEffect} from 'react';
+import React, {useState} from 'react';
 import './App.scss';
-import Controls from "./components/controls/Controls";
-import ControlPanel from "./containers/ControlPanel/ControlPanel";
-import useRequestBin from "./hooks/UseRequestBin";
+import LoadingLandingPage from "./containers/LandingPage/LoadingLandingPage";
+import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
+import requestBinClient from "./http/RequestBinClient";
+import RequestBinLandingPage from "./containers/LandingPage/RequestBinLandingPage";
+import NotFoundLandingPage from "./containers/LandingPage/NotFoundLandingPage";
 
-function App() {
-    // useRequestBin('test', e => console.log(e));
-
-    // useEffect(() => {
-    //     const eventSource = new EventSource('http://localhost:8080/test/stream');
-    //     eventSource.onmessage = e => console.log(e);
-    // }, []);
-
+const App = () => {
     return (
-        <section className="section">
-            <div className="container">
-                <h1 className="title">
-                    Request Bin
-                </h1>
-                <ControlPanel binId='test'/>
-            </div>
-        </section>
+        <BrowserRouter>
+            <Switch>
+                <Route path='/404' component={NotFoundLandingPage}/>
+                <Route path='/:binId' component={RequestBinLandingPage}/>
+                <Route path='/' component={LoadingLandingPage}/>
+            </Switch>
+        </BrowserRouter>
     );
-}
+};
 
 export default App;
