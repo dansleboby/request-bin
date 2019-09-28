@@ -23,8 +23,6 @@ services:
       depends_on:
         - mysql
         - cassandra
-      ports:
-        - 8080:10020
       environment:
         SPRING_DATASOURCE_URL: jdbc:mysql://request-bin-mysql:3306/request_bin?createDatabaseIfNotExist=true
         SPRING_DATASOURCE_USERNAME: root
