@@ -99,7 +99,7 @@
                     </buildArgs>
                     <images>
                         <image>
-                            <name>twaddle/twaddle-app</name>
+                            <name>request-bin/request-bin-app</name>
                             <build>
                                 <dockerFile>Dockerfile</dockerFile>
                                 <assembly>
