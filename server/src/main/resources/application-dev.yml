@@ -10,5 +10,8 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/request_bin?createDatabaseIfNotExist=true
     username: root
+  data:
+    cassandra:
+      contact-points: localhost
 server:
   port: 8080
