@@ -2,13 +2,11 @@ version: '3.7'
 services:
   request-bin-client:
     container_name: request-bin-client
+    image: request-bin/request-bin-client
     build:
       context: ..
       dockerfile: Docker/Dockerfile
-    volumes:
-      - '.:/app'
-      - '/app/node_modules'
     ports:
       - '80:80'
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
