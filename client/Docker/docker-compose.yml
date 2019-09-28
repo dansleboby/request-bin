@@ -8,5 +8,3 @@ services:
       dockerfile: Docker/Dockerfile
     ports:
       - '80:80'
-    environment:
-      - NODE_ENV=production
