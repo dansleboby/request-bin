@@ -27,7 +27,7 @@ services:
     container_name: request-bin-client
     image: request-bin/request-bin-client
     build:
-      context: ../server
+      context: ../client
       dockerfile: Docker/Dockerfile
     ports: 
       - 10021:80
