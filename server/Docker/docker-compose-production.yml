@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  request-bin-server:
+    container_name: request-bin-server
+    image: request-bin/request-bin-server
+    restart: on-failure
+    build:
+      context: ..
+      dockerfile: Docker/Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://request-bin-mysql:3306/request_bin?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATA_CASSANDRA_CONTACT-POINTS: request-bin-cassandra

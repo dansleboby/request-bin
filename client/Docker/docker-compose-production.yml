@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  request-bin-client:
+    container_name: request-bin-client
+    image: request-bin/request-bin-client
+    build:
+      context: ..
+      dockerfile: Docker/Dockerfile
+    ports: 
+      - 10021:80
