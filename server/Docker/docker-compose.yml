@@ -6,3 +6,5 @@ services:
     build:
       context: ..
       dockerfile: Docker/Dockerfile
+    ports:
+      - 10020:8080
