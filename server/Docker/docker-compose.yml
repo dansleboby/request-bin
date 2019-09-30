@@ -1,0 +1,8 @@
+version: '3.7'
+services:
+  request-bin-server:
+    container_name: request-bin-server
+    image: request-bin/request-bin-server
+    build:
+      context: ..
+      dockerfile: Docker/Dockerfile
