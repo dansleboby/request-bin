@@ -42,6 +42,11 @@ public class Utils {
             return "unknown";
         }
 
+        final String[] clientIpAddresses = clientIpAddress.split(",");
+        if (clientIpAddresses.length > 1) {
+            return clientIpAddresses[0];
+        }
+
         return clientIpAddress;
     }
 
