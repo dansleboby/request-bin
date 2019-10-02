@@ -1,7 +1,7 @@
-FROM maven:3.6.2-jdk-11-slim AS build
-COPY src /usr/src/app/src
+FROM maven:3.6.2-jdk-11-slim AS dependencies
 COPY pom.xml /usr/src/app
 RUN mvn dependency:go-offline -f /usr/src/app/pom.xml
+COPY src /usr/src/app/src
 RUN mvn -f /usr/src/app/pom.xml -T 1C package
 
 FROM openjdk:11-jre-slim
