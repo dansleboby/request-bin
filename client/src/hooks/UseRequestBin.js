@@ -15,7 +15,7 @@ const eventDispatcher = (dataCallback: function, updateCallback: function, event
 function useRequestBin(binId: string, dataCallback: function, updateCallback: function): void {
     useEffect(() => {
         const eventSourceUrl = process.env.NODE_ENV === 'production'
-            ? 'https://bin.graversen.io'
+            ? 'https://bin.graversen.io/api'
             : 'http://localhost:8080';
         const eventSource = new EventSource(`${eventSourceUrl}/${binId}/stream`);
         eventSource.onmessage = event => eventDispatcher(dataCallback, updateCallback, event);
