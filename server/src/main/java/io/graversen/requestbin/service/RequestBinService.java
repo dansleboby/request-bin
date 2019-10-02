@@ -21,10 +21,7 @@ import reactor.core.scheduler.Schedulers;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -146,7 +143,8 @@ public class RequestBinService {
     }
 
     private Map<String, String> sanitizeHttpHeaders(Map<String, String> httpHeaders) {
-        httpHeaders.keySet().removeAll(HTTP_HEADER_BLACKLIST);
-        return httpHeaders;
+        final var modifiableMap = new HashMap<>(httpHeaders);
+        modifiableMap.keySet().removeAll(HTTP_HEADER_BLACKLIST);
+        return Map.copyOf(modifiableMap);
     }
 }
