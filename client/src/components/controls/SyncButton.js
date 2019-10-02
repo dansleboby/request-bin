@@ -3,7 +3,7 @@ import React from 'react';
 const SyncButton = (props) => (
     <a
         onClick={props.syncClicked}
-        className="button is-outlined tooltip is-tooltip-right"
+        className="level-item button is-outlined tooltip is-tooltip-right"
         data-tooltip="Retrieve the latest HTTP requests for this bin"
         disabled={props.isSynced}
     >

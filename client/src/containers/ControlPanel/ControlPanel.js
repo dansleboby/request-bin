@@ -70,6 +70,7 @@ const ControlPanel = (props) => {
                 syncHandler={syncClicked}
                 isSynced={isSynced}
                 isPaused={isPaused}
+                binUrl={props.binUrl}
             />
             <hr/>
             {httpRequest}

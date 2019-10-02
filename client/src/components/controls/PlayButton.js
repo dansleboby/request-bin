@@ -5,7 +5,7 @@ const PlayButton = (props) => {
     const iconPause = "fas fa-pause";
 
     return (
-        <a onClick={props.playClickHandler} className="button is-outlined">
+        <a onClick={props.playClickHandler} className="level-item button is-outlined">
             <i className={props.isPaused ? iconPlay : iconPause}/>
         </a>
     );

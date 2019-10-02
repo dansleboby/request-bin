@@ -7,6 +7,7 @@ import {Redirect} from "react-router-dom";
 const RequestBinLandingPage = (props) => {
     const [isFound, setIsFound] = useState(true);
     const binId = props.match.params.binId;
+    const binUrl = `${window.location.protocol}//${window.location.hostname}/api/${binId}`;
 
     if (!isFound) {
         return <Redirect to='/404'/>;
@@ -20,7 +21,7 @@ const RequestBinLandingPage = (props) => {
                 <h1 className="title is-2 has-text-weight-light">
                     Request Bin
                 </h1>
-                <ControlPanel binId={binId}/>
+                <ControlPanel binId={binId} binUrl={binUrl}/>
             </div>
         </section>
     );
