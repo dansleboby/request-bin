@@ -21,6 +21,7 @@ import reactor.core.scheduler.Schedulers;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -32,7 +33,14 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class RequestBinService {
-    private final ISerializer SERIALIZER = new GsonSerializer();
+    private static final List<String> HTTP_HEADER_BLACKLIST = List.of(
+            "X-Forwarded-For",
+            "X-Forwarded-Port",
+            "X-Forwarded-Proto",
+            "Host"
+    );
+    private static final ISerializer SERIALIZER = new GsonSerializer();
+
     private final IRequestBinRepository requestBinRepository;
     private final IRequestByRequestBinRepository requestByRequestBinRepository;
     private final Clients clients;
@@ -51,7 +59,7 @@ public class RequestBinService {
     }
 
     public void createNewRequest(CreateRequest createRequest) {
-        final var httpHeaders = SERIALIZER.serialize(createRequest.getHttpHeaders());
+        final var httpHeaders = SERIALIZER.serialize(sanitizeHttpHeaders(createRequest.getHttpHeaders()));
         final var queryParameters = SERIALIZER.serialize(createRequest.getQueryParameters());
         final var duration = createRequest.getRequestDuration().toString();
 
@@ -135,5 +143,10 @@ public class RequestBinService {
         } catch (Exception e) {
             return 0;
         }
+    }
+
+    private Map<String, String> sanitizeHttpHeaders(Map<String, String> httpHeaders) {
+        httpHeaders.keySet().removeAll(HTTP_HEADER_BLACKLIST);
+        return httpHeaders;
     }
 }
