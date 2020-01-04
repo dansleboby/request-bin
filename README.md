@@ -18,6 +18,14 @@ I also wanted something that may become useful at times, and something that make
 * Use Spring Profile for dev/production
 * Establish the whole deployment (Reverse proxy configuration, SSL certificate, DNS, etc.)
 
+## Installation
+
+Since the *Docker Multistage Build* pattern is used, installing from source is as simple as:
+
+```
+docker-compose -f docker-compose-production-build.yml up --build -d
+```
+
 ## System Overview
 
 The system is composed (hehe!) of a React app served statically through an Nginx, with a Java 11 / Spring Framework 5.1 backend, proxied through the same Nginx.
