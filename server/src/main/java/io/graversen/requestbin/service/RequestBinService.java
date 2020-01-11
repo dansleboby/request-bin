@@ -15,8 +15,6 @@ import io.graversen.trunk.io.serialization.json.GsonSerializer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -24,7 +22,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -79,6 +76,7 @@ public class RequestBinService {
     public void emitLatest(String binId, int amount) {
         requestByRequestBinRepository.findAllByBinId(binId)
                 .limitRequest(amount)
+                .sort(Comparator.comparing(RequestByRequestBinEntity::getCreatedAt))
                 .map(requestDtoMapper())
                 .map(RequestEvent::data)
                 .subscribe(emitRequestEvent(binId));
