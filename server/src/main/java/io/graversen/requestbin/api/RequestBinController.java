@@ -1,6 +1,5 @@
 package io.graversen.requestbin.api;
 
-import io.graversen.requestbin.data.cassandra.IRequestByRequestBinRepository;
 import io.graversen.requestbin.data.dto.RequestBinCreated;
 import io.graversen.requestbin.data.mysql.RequestBinEntity;
 import io.graversen.requestbin.data.service.CreateRequest;
@@ -32,7 +31,6 @@ public class RequestBinController {
     private static final Base64.Encoder BASE_64_ENCODER = Base64.getEncoder();
     private final RequestBinService requestBinService;
     private final Clients clients;
-    private final IRequestByRequestBinRepository requestByRequestBinRepository;
 
     @PostMapping
     public ResponseEntity<RequestBinCreated> createBin(ServerHttpRequest serverHttpRequest) {

@@ -3,6 +3,8 @@ package io.graversen.requestbin.configuration;
 import io.graversen.requestbin.data.mysql.IRequestBinRepository;
 import io.graversen.requestbin.data.mysql.RequestBinEntity;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +24,7 @@ import java.util.function.Consumer;
 @EnableScheduling
 @ComponentScan(basePackages = "io.graversen.requestbin.api")
 @RequiredArgsConstructor
+@Slf4j
 public class ApiConfigProd implements WebFluxConfigurer {
     private static final Duration BIN_EXPIRY = Duration.ofDays(7);
     private static final List<String> SPECIAL_BINS = List.of(
@@ -38,6 +41,7 @@ public class ApiConfigProd implements WebFluxConfigurer {
         requestBinRepository.findByOpenTrue().stream()
                 .filter(requestBinEntity -> !SPECIAL_BINS.contains(requestBinEntity.getBinId()))
                 .filter(requestBinEntity -> requestBinEntity.getCreatedAt().isBefore(deleteAt))
+                .peek(requestBinEntity -> log.info("Cleaning up bin: {}", requestBinEntity.getBinId()))
                 .forEach(requestBinEntity -> requestBinEntity.setOpen(false));
     }
 
@@ -49,6 +53,7 @@ public class ApiConfigProd implements WebFluxConfigurer {
     private Consumer<String> createBinIfNotExists() {
         return binId -> {
             if (!requestBinRepository.existsByBinIdAndOpenTrue(binId)) {
+                log.info("Creating special bin: {}", binId);
                 requestBinRepository.save(new RequestBinEntity(binId, LocalDateTime.now(), "SYSTEM"));
             }
         };
