@@ -1,4 +1,4 @@
-package io.graversen.requestbin.data.service;
+package io.graversen.requestbin.service.requestbin;
 
 import lombok.Value;
 

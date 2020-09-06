@@ -1,12 +1,9 @@
-package io.graversen.requestbin.service;
+package io.graversen.requestbin.service.requestbin;
 
 import io.graversen.requestbin.data.cassandra.IRequestByRequestBinRepository;
 import io.graversen.requestbin.data.cassandra.RequestByRequestBinEntity;
-import io.graversen.requestbin.data.dto.Request;
 import io.graversen.requestbin.data.mysql.IRequestBinRepository;
 import io.graversen.requestbin.data.mysql.RequestBinEntity;
-import io.graversen.requestbin.data.service.CreateRequest;
-import io.graversen.requestbin.data.service.CreateRequestBin;
 import io.graversen.requestbin.streaming.Clients;
 import io.graversen.requestbin.streaming.RequestEvent;
 import io.graversen.requestbin.util.Utils;
@@ -18,22 +15,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class RequestBinService {
+    private static final ISerializer SERIALIZER = new GsonSerializer();
     private static final List<String> HTTP_HEADER_BLACKLIST = List.of(
             "X-Forwarded-For",
             "X-Forwarded-Port",
             "X-Forwarded-Proto",
             "Host"
     );
-    private static final ISerializer SERIALIZER = new GsonSerializer();
 
     private final IRequestBinRepository requestBinRepository;
     private final IRequestByRequestBinRepository requestByRequestBinRepository;
@@ -68,7 +65,7 @@ public class RequestBinService {
         );
 
         requestByRequestBinRepository.save(requestEntity)
-                .map(requestDtoMapper())
+                .map(requestBinRequestMapper())
                 .map(RequestEvent::data)
                 .subscribe(emitRequestEvent(createRequest.getBinId()));
     }
@@ -77,7 +74,7 @@ public class RequestBinService {
         requestByRequestBinRepository.findAllByBinId(binId)
                 .limitRequest(amount)
                 .sort(Comparator.comparing(RequestByRequestBinEntity::getCreatedAt))
-                .map(requestDtoMapper())
+                .map(requestBinRequestMapper())
                 .map(RequestEvent::data)
                 .subscribe(emitRequestEvent(binId));
     }
@@ -90,16 +87,35 @@ public class RequestBinService {
         return requestBinRepository.findByBinId(binId);
     }
 
-    private Function<RequestByRequestBinEntity, Request> requestDtoMapper() {
-        final var dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public List<RequestBin> getOpenBins() {
+        return requestBinRepository.findByOpenTrue().stream()
+                .map(mapRequestBin())
+                .collect(Collectors.toUnmodifiableList());
+    }
 
+    public void closeBin(String binId) {
+        requestBinRepository.findByBinId(binId).ifPresent(requestBinEntity -> requestBinEntity.setOpen(false));
+    }
+
+    private Function<RequestBinEntity, RequestBin> mapRequestBin() {
+        return requestBinEntity -> new RequestBin(
+                requestBinEntity.getId(),
+                requestBinEntity.getBinId(),
+                requestBinEntity.getCreatedAt(),
+                requestBinEntity.getExpiresAt(),
+                requestBinEntity.getCreatedBy(),
+                requestBinEntity.isOpen()
+        );
+    }
+
+    private Function<RequestByRequestBinEntity, RequestBinRequest> requestBinRequestMapper() {
         return entity -> {
             final Map<String, String> queryParameters = safeDeserialize(entity.getQueryParameters());
             final Map<String, String> httpHeaders = safeDeserialize(entity.getHttpHeaders());
-            final String createdAt = safeParseDate(entity.getCreatedAt(), dateTimeFormatter);
+            final String createdAt = safeParseDate(entity.getCreatedAt());
             final long durationMillis = safeParseDuration(entity.getRequestDuration());
 
-            return new Request(
+            return new RequestBinRequest(
                     entity.getBinId(),
                     createdAt,
                     entity.getRequestBody(),
@@ -124,9 +140,9 @@ public class RequestBinService {
         }
     }
 
-    private String safeParseDate(LocalDateTime localDateTime, DateTimeFormatter dateTimeFormatter) {
+    private String safeParseDate(LocalDateTime localDateTime) {
         try {
-            return localDateTime.format(dateTimeFormatter);
+            return localDateTime.format(Utils.HUMAN_READABLE_DATE_TIME_FORMAT);
         } catch (Exception e) {
             return "";
         }
