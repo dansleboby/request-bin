@@ -1,9 +1,10 @@
 package io.graversen.requestbin.service.requestbin;
 
-import io.graversen.requestbin.data.cassandra.RequestByRequestBinRepository;
+import io.graversen.requestbin.configuration.RequestBinProperties;
 import io.graversen.requestbin.data.cassandra.RequestByRequestBinEntity;
-import io.graversen.requestbin.data.mysql.RequestBinRepository;
+import io.graversen.requestbin.data.cassandra.RequestByRequestBinRepository;
 import io.graversen.requestbin.data.mysql.RequestBinEntity;
+import io.graversen.requestbin.data.mysql.RequestBinRepository;
 import io.graversen.requestbin.streaming.Clients;
 import io.graversen.requestbin.streaming.RequestEvent;
 import io.graversen.requestbin.util.Utils;
@@ -34,11 +35,12 @@ public class RequestBinService {
 
     private final RequestBinRepository requestBinRepository;
     private final RequestByRequestBinRepository requestByRequestBinRepository;
+    private final RequestBinProperties requestBinProperties;
     private final Clients clients;
 
     public RequestBinEntity createNew(CreateRequestBin createRequestBin) {
         final var binId = Objects.requireNonNullElseGet(createRequestBin.getBinId(), Utils::binId);
-        final var expiresAt = Utils.defaultBinExpiry();
+        final var expiresAt = LocalDateTime.now().plus(requestBinProperties.getBinExpiryDuration());
         final var createdBy = Utils.generateCreatedByString(
                 createRequestBin.getIpAddress(),
                 createRequestBin.getUserAgent()

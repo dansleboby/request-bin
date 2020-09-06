@@ -7,8 +7,6 @@ import lombok.experimental.UtilityClass;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
@@ -18,7 +16,6 @@ public class Utils {
 
     private static final RandomUtils RANDOM_UTILS = RandomUtilsFactory.defaultRandomUtils();
     private static final IpAddressUtils IP_ADDRESS_UTILS = new IpAddressUtils();
-    private static final Duration DEFAULT_BIN_EXPIRY = Duration.ofDays(1);
 
     public static String clientId() {
         return RANDOM_UTILS.randomString(16, true, true, false);
@@ -26,10 +23,6 @@ public class Utils {
 
     public static String binId() {
         return UUID.randomUUID().toString();
-    }
-
-    public static LocalDateTime defaultBinExpiry() {
-        return LocalDateTime.now().plus(DEFAULT_BIN_EXPIRY);
     }
 
     public static String generateCreatedByString(String ipAddress, String userAgent) {
