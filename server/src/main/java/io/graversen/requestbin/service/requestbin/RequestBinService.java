@@ -1,8 +1,8 @@
 package io.graversen.requestbin.service.requestbin;
 
-import io.graversen.requestbin.data.cassandra.IRequestByRequestBinRepository;
+import io.graversen.requestbin.data.cassandra.RequestByRequestBinRepository;
 import io.graversen.requestbin.data.cassandra.RequestByRequestBinEntity;
-import io.graversen.requestbin.data.mysql.IRequestBinRepository;
+import io.graversen.requestbin.data.mysql.RequestBinRepository;
 import io.graversen.requestbin.data.mysql.RequestBinEntity;
 import io.graversen.requestbin.streaming.Clients;
 import io.graversen.requestbin.streaming.RequestEvent;
@@ -32,8 +32,8 @@ public class RequestBinService {
             "Host"
     );
 
-    private final IRequestBinRepository requestBinRepository;
-    private final IRequestByRequestBinRepository requestByRequestBinRepository;
+    private final RequestBinRepository requestBinRepository;
+    private final RequestByRequestBinRepository requestByRequestBinRepository;
     private final Clients clients;
 
     public RequestBinEntity createNew(CreateRequestBin createRequestBin) {

@@ -11,5 +11,6 @@ spring:
 request-bin:
   maxFetchSize: 100
   adminSecret: ca5218c5-76a1-4d78-aedb-f3714abb151b
+  binExpiryDuration: PT1H
   persistentBins:
     - DEMO

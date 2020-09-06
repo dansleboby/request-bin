@@ -1,9 +1,9 @@
 package io.graversen.requestbin.configuration;
 
-import io.graversen.requestbin.data.mysql.IRequestBinRepository;
-import io.graversen.requestbin.data.mysql.RequestBinEntity;
+import io.graversen.requestbin.service.requestbin.CreateRequestBin;
+import io.graversen.requestbin.service.requestbin.RequestBin;
+import io.graversen.requestbin.service.requestbin.RequestBinService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,47 +14,50 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
+@Slf4j
 @Configuration
 @Profile("prod")
 @EnableScheduling
-@ComponentScan(basePackages = "io.graversen.requestbin.api")
 @RequiredArgsConstructor
-@Slf4j
+@ComponentScan(basePackages = "io.graversen.requestbin.api")
 public class ApiConfigProd implements WebFluxConfigurer {
-    private static final Duration BIN_EXPIRY = Duration.ofDays(7);
-    private static final List<String> SPECIAL_BINS = List.of(
-            "WAVELY-86244b38-adb9-4107-93f6-e860a4ad2c1f"
-    );
-
-    private final IRequestBinRepository requestBinRepository;
+    private final RequestBinProperties requestBinProperties;
+    private final RequestBinService requestBinService;
 
     @Scheduled(fixedDelayString = "PT1H")
-    public void cleanUpRequestBins() {
+    public void closeExpiredRequestBins() {
         final var now = LocalDateTime.now();
-        final var deleteAt = now.minus(BIN_EXPIRY);
+        final var deleteAt = now.minus(requestBinProperties.getBinExpiryDuration());
 
-        requestBinRepository.findByOpenTrue().stream()
-                .filter(requestBinEntity -> !SPECIAL_BINS.contains(requestBinEntity.getBinId()))
-                .filter(requestBinEntity -> requestBinEntity.getCreatedAt().isBefore(deleteAt))
-                .peek(requestBinEntity -> log.info("Cleaning up bin: {}", requestBinEntity.getBinId()))
-                .forEach(requestBinEntity -> requestBinEntity.setOpen(false));
+        requestBinService.getOpenBins().stream()
+                .filter(discardPersistentBins())
+                .filter(isExpired(deleteAt))
+                .peek(requestBin -> log.info("Cleaning up bin: {}", requestBin.getBinId()))
+                .forEach(requestBin -> requestBinService.closeBin(requestBin.getBinId()));
     }
 
     @EventListener(ApplicationReadyEvent.class)
     public void onApplicationReady() {
-        SPECIAL_BINS.forEach(createBinIfNotExists());
+        requestBinProperties.getPersistentBins().forEach(createPersistentBinIfNotExists());
     }
 
-    private Consumer<String> createBinIfNotExists() {
+    private Predicate<RequestBin> discardPersistentBins() {
+        return requestBin -> !requestBinProperties.getPersistentBins().contains(requestBin.getBinId());
+    }
+
+    private Predicate<RequestBin> isExpired(LocalDateTime deleteAt) {
+        return requestBin -> requestBin.getCreatedAt().isBefore(deleteAt);
+    }
+
+    private Consumer<String> createPersistentBinIfNotExists() {
         return binId -> {
-            if (!requestBinRepository.existsByBinIdAndOpenTrue(binId)) {
-                log.info("Creating special bin: {}", binId);
-                requestBinRepository.save(new RequestBinEntity(binId, LocalDateTime.now(), "SYSTEM"));
+            if (!requestBinService.requestBinExists(binId)) {
+                log.info("Creating persistent bin: {}", binId);
+                requestBinService.createNew(new CreateRequestBin(binId, "system", "system"));
             }
         };
     }
