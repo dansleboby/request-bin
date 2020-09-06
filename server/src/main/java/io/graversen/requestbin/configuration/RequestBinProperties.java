@@ -2,19 +2,19 @@ package io.graversen.requestbin.configuration;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.ConstructorBinding;
 
 import java.time.Duration;
 import java.util.List;
 
 @Getter
-@ConstructorBinding
+@Setter
 @RequiredArgsConstructor
 @ConfigurationProperties(prefix = "request-bin")
 public class RequestBinProperties {
-    private final int maxFetchSize;
-    private final String adminSecret;
-    private final Duration binExpiryDuration;
-    private final List<String> persistentBins;
+    private int maxFetchSize;
+    private String adminSecret;
+    private Duration binExpiryDuration;
+    private List<String> persistentBins;
 }

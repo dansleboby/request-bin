@@ -1,6 +1,6 @@
 package io.graversen.requestbin.data.cassandra;
 
-import com.datastax.oss.driver.api.core.uuid.Uuids;
+import com.datastax.driver.core.utils.UUIDs;
 import lombok.Data;
 import lombok.NonNull;
 import org.springframework.data.cassandra.core.cql.Ordering;
@@ -21,7 +21,7 @@ public class RequestByRequestBinEntity {
 
     @NonNull
     @PrimaryKeyColumn(name = "bucket", type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
-    private UUID bucket = Uuids.timeBased();
+    private UUID bucket = UUIDs.timeBased();
 
     @NonNull
     @PrimaryKeyColumn(name = "created_at", type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)

@@ -7,5 +7,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-  main:
-    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    active: dev
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.data.cassandra.CassandraReactiveDataAutoConfiguration
