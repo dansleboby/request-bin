@@ -9,5 +9,6 @@ spring:
     cassandra:
       contact-points: localhost
 request-bin:
+  maxFetchSize: 100
   persistentBins:
     - DEMO
