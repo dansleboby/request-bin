@@ -2,7 +2,7 @@
 <h1>Debug Page</h1>
 
 <script>
-    const eventSource = new EventSource('/test/stream');
+    const eventSource = new EventSource('/demo/stream');
     eventSource.onmessage = event => console.log(event);
 </script>
 

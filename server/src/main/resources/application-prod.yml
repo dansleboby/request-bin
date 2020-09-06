@@ -12,4 +12,4 @@ request-bin:
   maxFetchSize: 100
   binExpiryDuration: PT168H
   persistentBins:
-    - DEMO
+    - demo
