@@ -9,10 +9,13 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @UtilityClass
 public class Utils {
+    public static final DateTimeFormatter HUMAN_READABLE_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+
     private static final RandomUtils RANDOM_UTILS = RandomUtilsFactory.defaultRandomUtils();
     private static final IpAddressUtils IP_ADDRESS_UTILS = new IpAddressUtils();
     private static final Duration DEFAULT_BIN_EXPIRY = Duration.ofDays(1);

@@ -23,7 +23,7 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
 public class ApiConfigDev implements WebFluxConfigurer {
     @Bean
     public RouterFunction<ServerResponse> debugRouter(@Value("classpath:/public/debug.html") Resource html) {
-        return route(GET("/debug"), request -> ok().contentType(MediaType.TEXT_HTML).syncBody(html));
+        return route(GET("/debug"), request -> ok().contentType(MediaType.TEXT_HTML).bodyValue(html));
     }
 
     @Override

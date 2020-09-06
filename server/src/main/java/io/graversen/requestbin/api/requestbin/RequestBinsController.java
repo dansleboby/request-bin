@@ -1,10 +1,10 @@
-package io.graversen.requestbin.api;
+package io.graversen.requestbin.api.requestbin;
 
-import io.graversen.requestbin.data.dto.RequestBinCreated;
+import io.graversen.requestbin.configuration.RequestBinProperties;
 import io.graversen.requestbin.data.mysql.RequestBinEntity;
-import io.graversen.requestbin.data.service.CreateRequest;
-import io.graversen.requestbin.data.service.CreateRequestBin;
-import io.graversen.requestbin.service.RequestBinService;
+import io.graversen.requestbin.service.requestbin.CreateRequest;
+import io.graversen.requestbin.service.requestbin.CreateRequestBin;
+import io.graversen.requestbin.service.requestbin.RequestBinService;
 import io.graversen.requestbin.streaming.Clients;
 import io.graversen.requestbin.streaming.RequestEvent;
 import io.graversen.requestbin.streaming.StreamingUtils;
@@ -26,21 +26,22 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-public class RequestBinController {
-    private static final int MAX_FETCH_COUNT = 100;
+public class RequestBinsController {
     private static final Base64.Encoder BASE_64_ENCODER = Base64.getEncoder();
-    private final RequestBinService requestBinService;
+
     private final Clients clients;
+    private final RequestBinService requestBinService;
+    private final RequestBinProperties requestBinProperties;
 
     @PostMapping
-    public ResponseEntity<RequestBinCreated> createBin(ServerHttpRequest serverHttpRequest) {
+    public ResponseEntity<RequestBinCreatedDTO> createBin(ServerHttpRequest serverHttpRequest) {
         final String clientIp = Utils.getIpAddress(serverHttpRequest);
         final String userAgent = Utils.getUserAgent(serverHttpRequest);
 
-        final var createRequestBin = new CreateRequestBin(clientIp, userAgent);
+        final var createRequestBin = new CreateRequestBin(clientIp, userAgent, null);
         final RequestBinEntity requestBinEntity = requestBinService.createNew(createRequestBin);
 
-        final var requestBinCreated = new RequestBinCreated(requestBinEntity.getBinId());
+        final var requestBinCreated = new RequestBinCreatedDTO(requestBinEntity.getBinId());
 
         return ResponseEntity.ok(requestBinCreated);
     }
@@ -53,8 +54,6 @@ public class RequestBinController {
                     RequestMethod.PUT,
                     RequestMethod.PATCH,
                     RequestMethod.DELETE,
-                    RequestMethod.HEAD,
-                    RequestMethod.OPTIONS
             }
     )
     public ResponseEntity<Void> addToBin(
@@ -130,16 +129,10 @@ public class RequestBinController {
             return ResponseEntity.notFound().build();
         }
 
-        if (fetchCount < 0){
-            fetchCount = 0;
-        }
-
-        if (fetchCount > MAX_FETCH_COUNT) {
-            fetchCount = MAX_FETCH_COUNT;
-        }
+        fetchCount = Math.max(fetchCount, 0);
+        fetchCount = Math.min(fetchCount, requestBinProperties.getMaxFetchSize());
 
         requestBinService.emitLatest(binId, fetchCount);
-
         return ResponseEntity.ok().build();
     }
 }

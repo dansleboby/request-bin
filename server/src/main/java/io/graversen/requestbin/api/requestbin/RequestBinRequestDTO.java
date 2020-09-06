@@ -1,11 +1,11 @@
-package io.graversen.requestbin.data.dto;
+package io.graversen.requestbin.api.requestbin;
 
 import lombok.Value;
 
 import java.util.Map;
 
 @Value
-public class Request {
+public class RequestBinRequestDTO {
     private final String binId;
     private final String createdAt;
     private final String encodedRequestBody;

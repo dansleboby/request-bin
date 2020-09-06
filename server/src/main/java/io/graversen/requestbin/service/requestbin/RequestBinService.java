@@ -37,7 +37,7 @@ public class RequestBinService {
     private final Clients clients;
 
     public RequestBinEntity createNew(CreateRequestBin createRequestBin) {
-        final var binId = Utils.binId();
+        final var binId = Objects.requireNonNullElseGet(createRequestBin.getBinId(), Utils::binId);
         final var expiresAt = Utils.defaultBinExpiry();
         final var createdBy = Utils.generateCreatedByString(
                 createRequestBin.getIpAddress(),
