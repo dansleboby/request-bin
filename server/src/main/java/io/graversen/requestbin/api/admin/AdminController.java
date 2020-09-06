@@ -35,7 +35,7 @@ public class AdminController {
     }
 
     @DeleteMapping("bins/{binId}")
-    public ResponseEntity<List<RequestBinDTO>> closeRequestBin(@RequestHeader(X_SECRET_HEADER) String secret, String binId) {
+    public ResponseEntity<List<RequestBinDTO>> closeRequestBin(@RequestHeader(X_SECRET_HEADER) String secret, @PathVariable String binId) {
         if (!validateSecret(secret)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
