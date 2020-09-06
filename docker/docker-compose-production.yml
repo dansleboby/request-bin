@@ -23,6 +23,8 @@ services:
         SPRING_DATASOURCE_URL: jdbc:mysql://request-bin-mysql:3306/request_bin?createDatabaseIfNotExist=true
         SPRING_DATASOURCE_USERNAME: root
         SPRING_DATA_CASSANDRA_CONTACT-POINTS: request-bin-cassandra
+      env_file:
+        - request-bin-server.env
   request-bin-client:
     container_name: request-bin-client
     image: request-bin/request-bin-client
