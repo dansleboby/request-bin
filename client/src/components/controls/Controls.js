@@ -6,6 +6,7 @@ import Root from "../../containers/Root/Root";
 import Status from "./Status";
 import SyncButton from "./SyncButton";
 import BinUrl from "./BinUrl";
+import RelayServerCommand from "./RelayServerCommand";
 
 const Controls = (props) => (
     <Root>
@@ -20,7 +21,14 @@ const Controls = (props) => (
                 <BinUrl binUrl={props.binUrl}/>
             </div>
         </nav>
-        <Status latestUpdate={props.latestUpdate} current={props.current} total={props.total}/>
+        <nav className="level">
+            <div className="level-left">
+                <Status latestUpdate={props.latestUpdate} current={props.current} total={props.total}/>
+            </div>
+            <div className="level-right">
+                <RelayServerCommand binId={props.binId}/>
+            </div>
+        </nav>
     </Root>
 );
 

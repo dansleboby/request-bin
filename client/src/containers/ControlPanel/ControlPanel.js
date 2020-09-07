@@ -71,6 +71,7 @@ const ControlPanel = (props) => {
                 isSynced={isSynced}
                 isPaused={isPaused}
                 binUrl={props.binUrl}
+                binId={props.binId}
             />
             <hr/>
             {httpRequest}
