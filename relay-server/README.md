@@ -16,7 +16,7 @@ npm run build;
 npm install -g .;
 ```
 
-That should be it. You are now able to invoke the CLI by running `request-bin-relay` in your favorite terminal.
+That should be it. You are now able to invoke the CLI by running `requestbin` in your favorite terminal.
 
 ### Usage
 
@@ -29,5 +29,5 @@ The CLI takes three parameters:
 **Example**
 
 ```bash
-request-bin-relay --stream 46e39d85-eb3d-4a3a-928e-ce62f7daad61 --target http://localhost:8080/my/endpoint
+requestbin --stream 46e39d85-eb3d-4a3a-928e-ce62f7daad61 --target http://localhost:8080/my/endpoint
 ```
