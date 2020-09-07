@@ -1,4 +1,6 @@
+import {EventData} from "./EventData";
+
 export interface RequestBinEvent {
     eventType: string;
-    data: string;
+    data: EventData;
 }
