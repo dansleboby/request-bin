@@ -7,10 +7,10 @@ import java.time.LocalDateTime;
 
 @Value
 public class RequestBin {
-    private final @NonNull Long id;
-    private final @NonNull String binId;
-    private final @NonNull LocalDateTime createdAt;
-    private final @NonNull LocalDateTime expiresAt;
-    private final @NonNull String createdBy;
-    private final @NonNull boolean open;
+    @NonNull Long id;
+    @NonNull String binId;
+    @NonNull LocalDateTime createdAt;
+    LocalDateTime expiresAt;
+    @NonNull String createdBy;
+    @NonNull boolean open;
 }
