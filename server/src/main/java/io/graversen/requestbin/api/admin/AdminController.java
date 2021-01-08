@@ -23,7 +23,7 @@ public class AdminController {
 
     @GetMapping("bins")
     public ResponseEntity<List<RequestBinDTO>> getRequestBins(@RequestHeader(X_SECRET_HEADER) String secret) {
-        if (!validateSecret(secret)) {
+        if (secretInvalid(secret)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
@@ -36,7 +36,7 @@ public class AdminController {
 
     @DeleteMapping("bins/{binId}")
     public ResponseEntity<List<RequestBinDTO>> closeRequestBin(@RequestHeader(X_SECRET_HEADER) String secret, @PathVariable String binId) {
-        if (!validateSecret(secret)) {
+        if (secretInvalid(secret)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
@@ -46,11 +46,14 @@ public class AdminController {
 
     @PostMapping("bins")
     public ResponseEntity<Void> createRequestBin(@RequestHeader(X_SECRET_HEADER) String secret, @RequestBody CreateRequestBinDTO createRequestBin) {
-        if (!validateSecret(secret)) {
+        if (secretInvalid(secret)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
-        requestBinService.createNew(new CreateRequestBin("admin", "admin", createRequestBin.getBinId()));
+        requestBinService.createNew(
+                new CreateRequestBin("admin", "admin", createRequestBin.getBinId(), createRequestBin.getSource(), createRequestBin.isPersistent())
+        );
+
         return ResponseEntity.ok().build();
     }
 
@@ -63,7 +66,7 @@ public class AdminController {
         );
     }
 
-    boolean validateSecret(String secret) {
-        return requestBinProperties.getAdminSecret().equals(secret);
+    boolean secretInvalid(String secret) {
+        return !requestBinProperties.getAdminSecret().equals(secret);
     }
 }

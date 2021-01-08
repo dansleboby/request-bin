@@ -35,7 +35,7 @@ public class AppConfig {
         return binId -> {
             if (!requestBinService.requestBinExists(binId)) {
                 log.info("Creating persistent bin: {}", binId);
-                requestBinService.createNew(new CreateRequestBin("system", "system", binId));
+                requestBinService.createNew(new CreateRequestBin("system", "system", Sources.CONFIGURATION, binId, true));
             }
         };
     }

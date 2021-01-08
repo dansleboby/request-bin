@@ -5,7 +5,9 @@ import lombok.Value;
 
 @Value
 public class CreateRequestBin {
-    private final @NonNull String ipAddress;
-    private final @NonNull String userAgent;
-    private final String binId;
+    @NonNull String ipAddress;
+    @NonNull String userAgent;
+    @NonNull String source;
+    String binId;
+    boolean persistent;
 }
