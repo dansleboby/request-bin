@@ -9,14 +9,30 @@ I also wanted something that may become useful at times, and something that make
 **Avilable at:** https://bin.graversen.io
 
 ## Primary Challenges Solved
-* Real project using Spring WebFlux, Reactive Repositories, and SSE
+* Real project using Spring WebFlux, Reactive Repositories, and multi-subscriber SSE
 * React app, with Hooks, as part of the deliverable
+* Create a CLI to "reverse proxy" SSE streams to localhost (or other!) target
 * Continuous delivery pipeline using [Docker Multistage Build](https://docs.docker.com/develop/develop-images/multistage-build/) pattern
 
 ## Secondary Challenges Solved
 * Make a somewhat mobile-friendly UI
+* Use SASS to "compile" CSS
 * Use Spring Profile for dev/production
 * Establish the whole deployment (Reverse proxy configuration, SSL certificate, DNS, etc.)
+
+## Components
+
+### `server`
+The `server` directory is Java 11 backend running various Spring Boot and Spring Framework modules, which facilitates the management of "bins", streaming then using SSE based on Spring WebFlux, and backed by MySQL 8 and Cassandra 3 storage.
+
+### `relay-server`
+A command-line tool to "reverse proxy" a stream from an established bin, to a target of your choice.
+
+Useful to relay transmission of HTTP requests through mixed networks, e.g. from inside a Docker network to an endpoint not part of the Docker UDN.
+
+### `client`
+
+The frontend, based on React, using Hooks to manage SSE streaming through the DOM's `EventStream` object. The UI is based on Bulma CSS, compiled from SASS.
 
 ## Installation
 
