@@ -50,7 +50,7 @@ public class RequestBinService {
                 ? null
                 : LocalDateTime.now().plus(requestBinProperties.getBinExpiryDuration());
 
-        final var requestBinEntity = new RequestBinEntity(binId, createdBy);
+        final var requestBinEntity = new RequestBinEntity(binId, createdBy, createRequestBin.getSource());
         requestBinEntity.setExpiresAt(expiresAt);
 
         return requestBinRepository.save(requestBinEntity);
@@ -111,6 +111,7 @@ public class RequestBinService {
                 requestBinEntity.getCreatedAt(),
                 requestBinEntity.getExpiresAt(),
                 requestBinEntity.getCreatedBy(),
+                requestBinEntity.getSource(),
                 requestBinEntity.isOpen()
         );
     }

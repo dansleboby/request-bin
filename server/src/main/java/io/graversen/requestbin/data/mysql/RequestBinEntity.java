@@ -33,6 +33,10 @@ public class RequestBinEntity {
     private String createdBy;
 
     @NonNull
+    @Column(name = "source", nullable = false)
+    private String source;
+
+    @NonNull
     @Column(name = "open", nullable = false)
     private boolean open = true;
 }

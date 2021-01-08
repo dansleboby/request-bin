@@ -12,5 +12,6 @@ public class RequestBin {
     @NonNull LocalDateTime createdAt;
     LocalDateTime expiresAt;
     @NonNull String createdBy;
+    @NonNull String source;
     @NonNull boolean open;
 }
