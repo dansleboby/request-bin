@@ -1,6 +1,7 @@
 package io.graversen.requestbin.api.requestbin;
 
 import io.graversen.requestbin.configuration.RequestBinProperties;
+import io.graversen.requestbin.configuration.Sources;
 import io.graversen.requestbin.data.mysql.RequestBinEntity;
 import io.graversen.requestbin.service.requestbin.CreateRequest;
 import io.graversen.requestbin.service.requestbin.CreateRequestBin;
@@ -38,7 +39,7 @@ public class RequestBinsController {
         final String clientIp = Utils.getIpAddress(serverHttpRequest);
         final String userAgent = Utils.getUserAgent(serverHttpRequest);
 
-        final var createRequestBin = new CreateRequestBin(clientIp, userAgent, null);
+        final var createRequestBin = new CreateRequestBin(clientIp, userAgent, Sources.CLIENT, null, false);
         final RequestBinEntity requestBinEntity = requestBinService.createNew(createRequestBin);
 
         final var requestBinCreated = new RequestBinCreatedDTO(requestBinEntity.getBinId());

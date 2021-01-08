@@ -4,5 +4,5 @@ import lombok.Value;
 
 @Value
 public class RequestBinCreatedDTO {
-    private final String binId;
+    String binId;
 }
