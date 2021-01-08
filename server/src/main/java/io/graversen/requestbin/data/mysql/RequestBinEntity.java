@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "request_bin")
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Table(name = "request_bin")
 public class RequestBinEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +25,7 @@ public class RequestBinEntity {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @NonNull
-    @Column(name = "expires_at", nullable = false)
+    @Column(name = "expires_at")
     private LocalDateTime expiresAt;
 
     @NonNull

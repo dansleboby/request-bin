@@ -40,15 +40,20 @@ public class RequestBinService {
 
     public RequestBinEntity createNew(CreateRequestBin createRequestBin) {
         final var binId = Objects.requireNonNullElseGet(createRequestBin.getBinId(), Utils::binId);
-        final var expiresAt = LocalDateTime.now().plus(requestBinProperties.getBinExpiryDuration());
+
         final var createdBy = Utils.generateCreatedByString(
                 createRequestBin.getIpAddress(),
                 createRequestBin.getUserAgent()
         );
 
-        return requestBinRepository.save(
-                new RequestBinEntity(binId, expiresAt, createdBy)
-        );
+        final var expiresAt = createRequestBin.isPersistent()
+                ? null
+                : LocalDateTime.now().plus(requestBinProperties.getBinExpiryDuration());
+
+        final var requestBinEntity = new RequestBinEntity(binId, createdBy);
+        requestBinEntity.setExpiresAt(expiresAt);
+
+        return requestBinRepository.save(requestBinEntity);
     }
 
     public void createNewRequest(CreateRequest createRequest) {

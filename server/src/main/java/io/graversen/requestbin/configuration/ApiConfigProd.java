@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 @Slf4j
@@ -31,14 +32,18 @@ public class ApiConfigProd implements WebFluxConfigurer {
 
         requestBinService.getOpenBins().stream()
                 .filter(discardPersistentBins())
+                .filter(isExpirable())
                 .filter(isExpired(deleteAt))
                 .peek(requestBin -> log.info("Cleaning up bin: {}", requestBin.getBinId()))
                 .forEach(requestBin -> requestBinService.closeBin(requestBin.getBinId()));
     }
 
-
     private Predicate<RequestBin> discardPersistentBins() {
         return requestBin -> !requestBinProperties.getPersistentBins().contains(requestBin.getBinId());
+    }
+
+    private Predicate<RequestBin> isExpirable() {
+        return requestBin -> Objects.nonNull(requestBin.getExpiresAt());
     }
 
     private Predicate<RequestBin> isExpired(LocalDateTime deleteAt) {
