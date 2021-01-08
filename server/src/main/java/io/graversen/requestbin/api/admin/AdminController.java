@@ -51,7 +51,7 @@ public class AdminController {
         }
 
         requestBinService.createNew(
-                new CreateRequestBin("admin", "admin", createRequestBin.getBinId(), createRequestBin.getSource(), createRequestBin.isPersistent())
+                new CreateRequestBin("admin", "admin", createRequestBin.getSource(), createRequestBin.getBinId(), createRequestBin.isPersistent())
         );
 
         return ResponseEntity.ok().build();
