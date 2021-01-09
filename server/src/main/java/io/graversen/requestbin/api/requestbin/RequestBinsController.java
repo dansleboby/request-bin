@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
@@ -60,7 +61,7 @@ public class RequestBinsController {
     public ResponseEntity<Void> addToBin(
             @PathVariable String binId,
             @RequestBody(required = false) String requestBody,
-            @RequestParam(required = false) Map<String, String> requestParams,
+            @RequestParam(required = false) MultiValueMap<String, String> requestParams,
             ServerHttpRequest serverHttpRequest
     ) {
         final var start = LocalTime.now();
@@ -87,7 +88,7 @@ public class RequestBinsController {
         final var createRequest = new CreateRequest(
                 binId,
                 encodedRequestBody,
-                requestParams,
+                requestParams.toSingleValueMap(),
                 httpHeaders,
                 clientIp,
                 httpVerb,
