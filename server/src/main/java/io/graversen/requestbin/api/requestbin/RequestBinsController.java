@@ -11,6 +11,7 @@ import io.graversen.requestbin.streaming.RequestEvent;
 import io.graversen.requestbin.streaming.StreamingUtils;
 import io.graversen.requestbin.util.Utils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -59,11 +60,9 @@ public class RequestBinsController {
     )
     public ResponseEntity<Void> addToBin(
             @PathVariable String binId,
-            @RequestBody(required = false) String requestBody,
             @RequestParam(required = false) Map<String, String> requestParams,
             ServerHttpRequest serverHttpRequest
     ) {
-        final var start = LocalTime.now();
         final Optional<RequestBinEntity> requestBinEntityOptional = requestBinService.getByBinId(binId);
 
         if (requestBinEntityOptional.isEmpty()) {
@@ -76,25 +75,32 @@ public class RequestBinsController {
             return ResponseEntity.status(HttpStatus.GONE).build();
         }
 
-        requestBody = Objects.requireNonNullElse(requestBody, "");
+        serverHttpRequest.getBody().subscribe(dataBuffer -> {
+            final var start = LocalTime.now();
 
-        final Map<String, String> httpHeaders = serverHttpRequest.getHeaders().toSingleValueMap();
-        final String clientIp = Utils.getIpAddress(serverHttpRequest);
-        final String httpVerb = serverHttpRequest.getMethodValue();
-        final String encodedRequestBody = BASE_64_ENCODER.encodeToString(requestBody.getBytes());
-        final Duration duration = Duration.between(start, LocalTime.now());
+            final byte[] requestBodyBytes = new byte[dataBuffer.readableByteCount()];
+            dataBuffer.read(requestBodyBytes);
+            DataBufferUtils.release(dataBuffer);
 
-        final var createRequest = new CreateRequest(
-                binId,
-                encodedRequestBody,
-                requestParams,
-                httpHeaders,
-                clientIp,
-                httpVerb,
-                duration
-        );
+            final Map<String, String> httpHeaders = serverHttpRequest.getHeaders().toSingleValueMap();
+            final String clientIp = Utils.getIpAddress(serverHttpRequest);
+            final String httpVerb = serverHttpRequest.getMethodValue();
+            final String encodedRequestBody = BASE_64_ENCODER.encodeToString(requestBodyBytes);
+            final Duration duration = Duration.between(start, LocalTime.now());
 
-        requestBinService.createNewRequest(createRequest);
+            final var createRequest = new CreateRequest(
+                    binId,
+                    encodedRequestBody,
+                    requestParams,
+                    httpHeaders,
+                    clientIp,
+                    httpVerb,
+                    duration
+            );
+
+            requestBinService.createNewRequest(createRequest);
+        });
+
         return ResponseEntity.ok().build();
     }
 
