@@ -75,7 +75,7 @@ public class RequestBinsController {
             return ResponseEntity.status(HttpStatus.GONE).build();
         }
 
-        serverHttpRequest.getBody().doOnNext(dataBuffer -> {
+        serverHttpRequest.getBody().subscribe(dataBuffer -> {
             final var start = LocalTime.now();
 
             final byte[] requestBodyBytes = new byte[dataBuffer.readableByteCount()];
