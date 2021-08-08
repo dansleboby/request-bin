@@ -35,5 +35,5 @@ services:
     build:
       context: ../client
       dockerfile: Docker/Dockerfile
-    ports: 
+    ports:
       - 10021:80

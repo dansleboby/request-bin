@@ -15,21 +15,21 @@ services:
     volumes:
       - mysql-volume
   request-bin-server:
-      container_name: request-bin-server
-      image: request-bin/request-bin-server
-      restart: on-failure
-      depends_on:
-        - mysql
-        - cassandra
-      environment:
-        SPRING_DATASOURCE_URL: jdbc:mysql://request-bin-mysql:3306/request_bin?createDatabaseIfNotExist=true
-        SPRING_DATASOURCE_USERNAME: root
-        SPRING_DATA_CASSANDRA_CONTACT-POINTS: request-bin-cassandra
-      env_file:
-        - request-bin-server.env
+    container_name: request-bin-server
+    image: request-bin/request-bin-server
+    restart: on-failure
+    depends_on:
+      - mysql
+      - cassandra
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://request-bin-mysql:3306/request_bin?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATA_CASSANDRA_CONTACT-POINTS: request-bin-cassandra
+    env_file:
+      - request-bin-server.env
   request-bin-client:
     container_name: request-bin-client
     image: request-bin/request-bin-client
     restart: on-failure
-    ports: 
+    ports:
       - 10021:80
