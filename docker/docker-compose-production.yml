@@ -3,11 +3,13 @@ services:
   cassandra:
     container_name: request-bin-cassandra
     image: cassandra:3.11.0
+    restart: on-failure
     volumes:
       - cassandra-volume
   mysql:
     container_name: request-bin-mysql
     image: mysql:8.0.17
+    restart: on-failure
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     volumes:
@@ -28,5 +30,6 @@ services:
   request-bin-client:
     container_name: request-bin-client
     image: request-bin/request-bin-client
+    restart: on-failure
     ports: 
       - 10021:80
