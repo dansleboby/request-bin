@@ -2,7 +2,7 @@ version: "3.7"
 services:
   cassandra:
     container_name: request-bin-cassandra
-    image: cassandra:3.11.0
+    image: cassandra:3.11.11
     restart: on-failure
     volumes:
       - cassandra-volume
