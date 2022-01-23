@@ -6,6 +6,8 @@ services:
     restart: unless-stopped
     volumes:
       - cassandra-volume:/var/lib/cassandra
+    networks:
+      - graversen-io-network
 
   mysql:
     container_name: request-bin-mysql
@@ -15,6 +17,8 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
     volumes:
       - mysql-volume:/bitnami/mysql/data
+    networks:
+      - graversen-io-network
 
   request-bin-server:
     container_name: request-bin-server
@@ -30,6 +34,8 @@ services:
       SPRING_PROFILES_ACTIVE: prod
     env_file:
       - request-bin-server.env
+    networks:
+      - graversen-io-network
 
   request-bin-client:
     container_name: request-bin-client
