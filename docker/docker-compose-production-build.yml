@@ -5,15 +5,17 @@ services:
     image: cassandra:3.11.11
     restart: unless-stopped
     volumes:
-      - cassandra-volume
+      - cassandra-volume:/var/lib/cassandra
+
   mysql:
     container_name: request-bin-mysql
-    image: mysql:8.0.26
+    image: bitnami/mysql:8.0.23
     restart: unless-stopped
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     volumes:
-      - mysql-volume
+      - mysql-volume:/bitnami/mysql/data
+
   request-bin-server:
     container_name: request-bin-server
     image: request-bin/request-bin-server
@@ -28,6 +30,7 @@ services:
       SPRING_PROFILES_ACTIVE: prod
     env_file:
       - request-bin-server.env
+
   request-bin-client:
     container_name: request-bin-client
     image: request-bin/request-bin-client
@@ -41,3 +44,7 @@ services:
 networks:
   graversen-io-network:
     driver: bridge
+
+volumes:
+  mysql-volume:
+  cassandra-volume:
