@@ -12,7 +12,7 @@ services:
     image: bitnami/mysql:8.0.23
     restart: unless-stopped
     environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - ALLOW_EMPTY_PASSWORD=yes
     volumes:
       - mysql-volume:/bitnami/mysql/data
 
