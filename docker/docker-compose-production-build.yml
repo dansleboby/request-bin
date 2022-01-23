@@ -35,5 +35,9 @@ services:
     build:
       context: ../client
       dockerfile: Docker/Dockerfile
-    ports:
-      - 10021:80
+    networks:
+      - graversen-io-network
+
+networks:
+  graversen-io-network:
+    driver: bridge
