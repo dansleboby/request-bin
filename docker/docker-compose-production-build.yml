@@ -32,6 +32,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATA_CASSANDRA_CONTACT-POINTS: request-bin-cassandra
       SPRING_PROFILES_ACTIVE: prod
+      SERVER_PORT: 10002
     env_file:
       - request-bin-server.env
     networks:
