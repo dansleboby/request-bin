@@ -122,7 +122,9 @@ public class RequestBinsController {
                 .doOnError(e -> clients.unregister(clientId))
                 .doOnTerminate(() -> clients.unregister(clientId));
 
-        return ResponseEntity.ok(mergedEventStream);
+        return ResponseEntity.ok()
+                .header("X-Accel-Buffering", "no")
+                .body(mergedEventStream);
     }
 
     @GetMapping(value = "{binId}/stream/{fetchCount}")
