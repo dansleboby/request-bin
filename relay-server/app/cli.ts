@@ -24,7 +24,7 @@ console.log(args);
 
 if (args.help) { 
     console.log(`
-Usage: relay.js --host=<host> --stream=<stream> --target=<target> [options]
+Usage: requestbin --host=<host> --stream=<stream> --target=<target> [options]
 
 Options:
   --host=<host>                Request Bin host (default: ${defaultHost})
